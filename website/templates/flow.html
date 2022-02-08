@@ -1,0 +1,15 @@
+{% include 'index.html' %}
+{% load static %}
+{% block content %}
+	{% if user.is_authenticated %}
+        <br>
+        <a href="{% url 'subs'%}"> Subcribers</a>
+        <br>
+        <a href="{% url 'posts'%}"> Posts</a>
+        <br>
+        <a href="{% url 'ticket'%}"> Create a ticket</a>
+        <br>
+        <a href="{% url 'review'%}"> Create a Review</a>
+
+	{% endif %}
+{% endblock content%}

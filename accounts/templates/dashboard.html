@@ -3,6 +3,11 @@
 {% block content %}
 
 <h1> Welcome {{user.username}} </h1>
+	{% if user.is_authenticated %}
+	<a href="{% url 'flow'%}"> Flow</a>
+	{% comment %} {% else user.is_authenticated %} {% endcomment %}
+
+	{% endif %}
 
 
 {% endblock %}
