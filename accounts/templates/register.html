@@ -1,0 +1,81 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<ul class='login-navbar'>
+    <li> <a href="{% url 'home' %}">LITReview</a></li>
+</ul>
+
+
+
+{% comment %} 
+<div class='form-register'>
+    <form method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button> Register </button>
+    </form>
+</div>
+
+{% endcomment %}
+<form class="form-register" method="POST">
+        <h2> Create New Acount </h2>
+        {% csrf_token %}
+
+            <div>
+                <div>
+                    {{form.username}}
+                </div>
+            </div>
+
+
+            <!-- RETURN ERROR FOR USERNAME -->
+            {% if form.username.errors %}
+            {% for error in form.username.errors %}
+            <div class="error-form">
+                <strong>{{ error|escape }}</strong>
+            </div>
+            {% endfor %}
+            {% endif %}
+
+
+            <div>
+                <div>
+                    {{form.password1}}
+                </div>
+            </div>
+
+
+            <!-- RETURN ERROR FOR PASSWORD -->
+            {% if form.password1.errors %}
+            {% for error in form.password1.errors %}
+            <div class="error-form">
+                <strong>{{ error|escape }}</strong>
+            </div>
+            {% endfor %}
+            {% endif %}
+
+
+            <div>
+                <div>
+                    {{form.password2}}
+                </div>
+            </div>
+
+
+            <!-- RETURN ERROR FOR PASSWORD CHECK -->
+            {% if form.password2.errors %}
+            {% for error in form.password2.errors %}
+            <div class="error-form">
+                <strong>{{ error|escape }}</strong>
+            </div>
+            {% endfor %}
+            {% endif %}
+
+
+            <div class="button-signin-form">
+                <a href="{% url 'home' %}"class="register-button">Back</a></p></button>
+                <button class="register-button">Register</button>
+            </div>
+
+    </form>
+    {% endblock %}

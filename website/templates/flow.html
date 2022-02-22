@@ -1,15 +1,28 @@
-{% include 'index.html' %}
+{% extends 'index.html' %}
 {% load static %}
 {% block content %}
 	{% if user.is_authenticated %}
-        <br>
-        <a href="{% url 'subs'%}"> Subcribers</a>
-        <br>
-        <a href="{% url 'posts'%}"> Posts</a>
-        <br>
-        <a href="{% url 'ticket'%}"> Create a ticket</a>
-        <br>
-        <a href="{% url 'review'%}"> Create a Review</a>
+        <ul>
+                <li> <a href="{% url 'ticket'%}"> Create a ticket</a></li>
+                <li><a href="{% url 'posts'%}"> Posts</a></li>
+                <li><a href="{% url 'subs'%}"> Subcribers</a></li>
+                {% comment %} <li><a href="{% url 'review'%}"> Create a Review</a></li> {% endcomment %}
+                <li><a href="{% url 'dashboard' %}"> Dashboard</a></li>
+                <li><a href="{% url 'logout' %}">Logout </a></li>
+        </ul>
 
-	{% endif %}
+        {% comment %} <button type='ask_review'>Ask a Review </button> {% endcomment %}
+        <!-- <li><a href="{% url 'review' %}" type='ask_review'>Ask a Review </button></li>
+        <a href="{% url 'ticket' %}" type='create_review'>Create a Ticket </button> -->
+        <div class='review_ticket'>
+                <h1> Your post </h1>
+                <h4> Ratings - ✭ ✭ ✭ ✭ ✭ </h4>
+                <p> An excellent read - I absolutely recommend it !</p>
+                <div class='ticket'>
+                <h3>Ticket - jean8597</h3>
+                <h3>The Origin of Species - Charles Darwin</h3>
+                <img style=width:20%; src="{% static 'images/img1.jpg' %}" alt="img1">
+        </div>
+</div>
+{% endif %}
 {% endblock content%}

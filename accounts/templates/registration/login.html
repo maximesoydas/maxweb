@@ -1,12 +1,33 @@
 {% extends 'index.html' %}
 
 {% block content %}
-    <h1> Login </h1>
-    <form method="POST">
-          {% csrf_token %}
-        {{form.as_p}}
-        <button> Login </button>
-    </form>
+{% if user.is_authenticated %}
+<ul>
+    <li><a href="{% url 'dashboard' %}"> Dashboard</a></li>
+    <li><a href="{% url 'logout' %}">Logout </a></li>
+    </ul>
+    {% comment %} <a href="{% url 'flow' %}"> Home</a> {% endcomment %}
+    {% else %}
+    <ul class="login-navbar">
+        <li> <a href="{% url 'home' %}">LITReview</a></li>
+    </ul>
+
+
+        <div class="homepage register-homepage">
+            
+            <h2>Register Now</h2>
+            <button><a href="{% url 'register' %}"> Register</a></button>
+            
+        </div>
+        <div class='homepage form-login'>
+            <h2> Login </h2>
+            <form method="POST">
+                {% csrf_token %}
+                {{form.as_p}}
+                <button> Login </button>
+            </form>
+        </div>
+    {% endif %}
 {% endblock %}
 
 

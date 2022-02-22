@@ -1,0 +1,134 @@
+/* .form{
+    color: black;
+    border: red;
+    position: center;
+    margin: 25vmin;
+    /* padding-top: vmin; */
+}
+
+body{
+    background-color: whitesmoke;
+    font-family: Arial, Helvetica, sans-serif;
+    height: 5vh;
+    }
+.form button{
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    /* border-radius: 4px; */
+    cursor: pointer;
+}
+.review_ticket{
+    color: #333;
+    margin-top:12em;
+    margin-left:35vmin;
+    margin-right: 35vmin;
+    border-color: red;
+    background: #ccc;
+    /* text-align: left; */
+    /* margin: 12em; */
+}
+
+.review_ticket h1,h2,h3,h4,h5,p{
+    color: #333;
+    text-align: left;
+    background: #ccc;
+    /* border-radius: 10em; */
+    border-color: red;
+    /* margin: 12em; */
+}
+
+.form input, select{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    /* border-radius: 4px; */
+    box-sizing: border-box;
+    text-align: center;
+}
+.form textarea{
+    width: 100%;
+    height: 150px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    /* border-radius: 4px; */
+    background-color: #f8f8f8;
+    resize: none;
+}
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    font-size: 2em
+  }
+
+.form ul{
+    background-color: transparent;
+    color: darkgrey;
+    font-style: bold;
+    font-size: 1.8em;
+    padding: 1.5vmin;
+}
+.form ul:hover{
+
+    opacity: 70%;
+    color: white;
+    font-style: bold;
+    font-size: 1.8em;
+    padding: 1.5vmin;
+}
+  
+li {
+float: left;
+font-size: 0.70em;
+}
+
+li a {
+display: block;
+color: white;
+text-align: center;
+padding: 14px 16px;
+text-decoration: none;
+}
+
+/* Change the link color to #111 (black) on hover */
+li a:hover {
+background-color: #4CAF50;
+}
+
+
+button[type='fichier']{
+    width: 100%;
+    text-align: center;
+    color: white;
+    background-color: #333;
+    font-size:1vmin ;
+
+}
+
+button[type='fichier']:hover{
+    background-color: #4CAF50;
+
+}
+
+button[type='submit']{
+    width: 30%;
+    text-align: center;
+    margin: auto;
+    font-size:1vmin ;
+    margin-left:30vmin
+
+}
+
+button[type='submit']:hover{
+    background-color: #333;
+
+} */

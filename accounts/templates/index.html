@@ -1,23 +1,28 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- CSS CUSTOM -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <title>Homepage</title>
 </head>
 <body>
     {% block content %}
-
         {% if user.is_authenticated %}
-        <a href="{% url 'dashboard' %}"> Dashboard</a>
-        <br>
-        <a href="{% url 'logout' %}">Logout </a>
+        <ul>
+        <li><a href="{% url 'dashboard' %}"> Dashboard</a></li>
+        <li><a href="{% url 'logout' %}">Logout </a></li>
+        </ul>
         {% comment %} <a href="{% url 'flow' %}"> Home</a> {% endcomment %}
         {% else %}
-        <a href="{% url 'login_url' %}"> Login</a>
-        <a href="{% url 'register_url' %}"> Register</a>
-        <a href="{% url 'admin:index' %}"> admin</a>
+        <ul>
+        <li><a href="{% url 'login_url' %}"> Login</a></li>
+        <li> <a href="{% url 'register_url' %}"> Register</a></li>
+        <li><a href="{% url 'admin:index' %}"> admin</a></li>
+        </ul>
         {% endif %}
     {% endblock %}
 </body>
