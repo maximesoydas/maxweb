@@ -1,8 +1,13 @@
+from multiprocessing import context
 from django.shortcuts import render,redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from .models import Profile
+from django.views.generic import ListView, DetailView
+from accounts.models import Profile
 from .forms import RegisterForm
+
 # Create your views here.
 
 def indexView(request):
@@ -53,3 +58,36 @@ def register(request):
         return render(request, 'register.html', context)
 
     return render(request, 'register.html', {})
+
+class ProfileListView(ListView):
+    model = Profile
+    template_name = 'profiles/subs.html'
+    context_object_name = 'profiles' 
+
+    # exclude your own user
+    def get_queryset(self):
+        return Profile.objects.all().exclude(user=self.request.user)
+
+
+    
+class ProfileDetailView(DetailView):
+    model = Profile
+    template_name = 'profiles/detail.html'
+
+    def get_object(self, **kwargs):
+        pk = self.kwargs.get('pk')
+        view_profile = Profile.objects.get(pk=pk)
+        return view_profile
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        view_profile = self.get_object()
+        my_profile = Profile.objects.get(user=self.request.user)
+        if view_profile.user in my_profile.following.all():
+            follow = True
+        else:
+            follow = False
+        context["follow"] = follow
+
+
+        return context

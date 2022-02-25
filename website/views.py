@@ -24,3 +24,12 @@ def review(request):
 
 def ticket(request):
     return render(request, 'tickets/ticket.html')
+
+def review_of_ticket(request):
+    return render(request, 'reviews/review_of_ticket.html')
+
+def modify_ticket(request):
+    return render(request, 'tickets/modify_ticket.html')
+
+def modify_review(request):
+    return render(request, 'reviews/modify_review.html')

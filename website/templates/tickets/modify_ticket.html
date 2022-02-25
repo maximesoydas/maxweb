@@ -1,6 +1,36 @@
+{% extends 'index.html' %}
+{% load static %}
 {% block content %}
-<a href="{% url 'flow'%}"> Flow</a>
+
+{% if user.is_authenticated %}
+<ul class="flow-navbar">
+    <li><a href="{% url 'logout' %}">Logout </a></li>
+    <li><a href="{% url 'subs'%}"> Subscribers</a></li>
+    <li><a href="{% url 'posts'%}"> Posts</a></li>
+    <li><a href="{% url 'flow' %}"> Flow</a></li>
+    <li class='logo-navbar'><a href="{% url 'flow'%}">LITReview</a></li>
+</ul>
+
+
+<div class='tickets' style='margin-top:30px'>
+    <form method='POST'>
+        <div class="ticket-title">
+            <h2>Modify a ticket</h2>
+            <p>Title</p>
+            <input type='text' name='title' placeholder='Your Ticket Title'>
+        </div>
+        <div class="ticket-description">
+            <p>Description </p>
+            <textarea name='content' placeholder='Content'></textarea>
+        </div>
+        <div class="ticket-image">
+            <p>Image</p>
+             <img src="{% static 'images/img2.jpg' %}" alt="img2">
+             <br>
+            <button type='fichier'>Download File</button>
+        </div>
+        <button class="create-ticket-btn" type='submit'>Send</button>
+    </form> 
+</div>
+{% endif %}
 {% endblock content%}
-<br>
-modify a ticket
-form

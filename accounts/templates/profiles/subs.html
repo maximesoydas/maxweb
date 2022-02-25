@@ -3,6 +3,8 @@
 {% block content %}
 
 {% if user.is_authenticated %}
+
+
 <ul class="flow-navbar">
     <li><a href="{% url 'logout' %}">Logout </a></li>
     <li><a href="{% url 'subs'%}"> Subscribers</a></li>
@@ -18,16 +20,15 @@
         <input type="text" name="search-users" class="-subs-search" placeholder="Username">
         <button>Send</button>
     </form>
-
+    
     <div class="subscriptions">
-        <h3>Subscriptions</h3>
-        <ul>
-            <li>jean_5679<button> REMOVE</button></li>
-            <li>sarahj<button>REMOVE</button></li>
-            <li>severine123<button>REMOVE</button></li>
-
-        </ul>
-
+        <h3>All Profiles</h3>
+    {% for profile in profiles %}
+       
+            <ul>
+                <li>{{profile}}<button> <a href="{% url 'profile-detail-view' profile.pk %}">  See profile</a></button></li>  
+            </ul>
+                {% endfor %}
     </div>
 
     <div class="subscribers">

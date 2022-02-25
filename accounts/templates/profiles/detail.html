@@ -1,0 +1,87 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+
+{% if user.is_authenticated %}
+
+<head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<!-- Modal -->
+<div class="ui basic modal">
+    <div class="ui icon header">
+      <i class="archive icon"></i>
+      Are you sure you want to subscribe to {{object}}? 
+    </div>
+    <div class="content">
+      <p>After pressing yes you will be able to see all posts published by {{object}}</p>
+    </div>
+    <div class="actions">
+        <form action="" method="POST">
+
+            {% csrf_token %}
+            <input type="hidden" name="profile_pk" value="{{object.pk}}">
+
+        <button type="submit" class="ui green ok massive button">
+            <i class="checkmark icon"></i>
+            Yes
+        </button>
+    </form>
+        
+
+    </div>
+  </div>
+
+
+<ul class="flow-navbar">
+    <li><a href="{% url 'logout' %}">Logout </a></li>
+    <li><a href="{% url 'subs'%}"> Subscribers</a></li>
+    <li><a href="{% url 'posts'%}"> Posts</a></li>
+    <li><a href="{% url 'flow' %}"> Flow</a></li>
+    <li class='logo-navbar'><a href="{% url 'flow'%}">LITReview</a></li>
+</ul>
+
+<div class="subscriptions">
+        <h3 style="text-align: center;">Profile</h3>
+            <ul>
+                <li>{{object}}<button> <a href="{% url 'profile-detail-view' profile.pk %}">  See profile</a></button></li> 
+                {% if follow %}
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="profile_pk" value="{{object.pk}}">
+                        <button type="submit">unfollow</button>
+                    </form>
+                {% else %}
+                        <button id="follow-btn" class="ui positive button">follow</button>
+                {% endif %} 
+                {% comment %}
+                  
+                <!-- <div>
+                    {% for post in object.profiles_posts %}
+                    <div>
+                        {{post.body}}
+                    </div>
+                    {% endfor %}
+                </div> -->
+                {% endcomment %}
+            </ul>
+    </div>
+
+
+</div>
+
+{% endif %}
+{% endblock content%}
+{% block scripts %}
+<script src='http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.js'></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#follow-btn').click(function(){
+            $('.ui.basic.modal')
+            .modal('show')
+        })
+        ;
+    })
+</script>
+
+{% endblock scripts %}

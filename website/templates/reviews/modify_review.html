@@ -1,6 +1,46 @@
+{% extends 'index.html' %}
+{% load static %}
 {% block content %}
-<a href="{% url 'flow'%}"> Flow</a>
+
+{% if user.is_authenticated %}
+<ul class="flow-navbar">
+    <li><a href="{% url 'logout' %}">Logout </a></li>
+    <li><a href="{% url 'subs'%}"> Subscribers</a></li>
+    <li><a href="{% url 'posts'%}"> Posts</a></li>
+    <li><a href="{% url 'flow' %}"> Flow</a></li>
+    <li class='logo-navbar'><a href="{% url 'flow'%}">LITReview</a></li>
+</ul>
+
+
+    
+<h2 class="review-of-ticket-title">Modify your review</h2>
+        <div class='tickets'>
+            <h3 class="review-of-ticket-title2">You are posting in reply to:</h3>
+            <div class='flow-ticket' style="width: 70%; margin: 0 auto;">
+                <p class="flow-owner"> jean_5679 asked for a review </p>
+                <p class="flow-timedate">14:00, 26 August 2020</p>
+                <h3 class="review-of-ticket-title2">The Origin of Species - Charles Darwin</h3>
+                <p class="flow-description"> I am looking for an opnion about this subject, please,thanks !</p>
+                <img style=width:20%; src="{% static 'images/img1.jpg' %}" alt="img1">
+        </div>
+        </div>
+        <div class="review">
+            <form class="tickets-form" method='POST'>
+                <h3>Review</h3>
+                <div class="review-title">
+                    <p>Title</p>
+                    <input type='text' name='title' placeholder='Your Review Title'>
+                </div>
+                <div class="review-note">
+                    <p>Note</p>
+                    <input type="checkbox"> - 0<input type="checkbox"> - 1<input type="checkbox"> - 2<input type="checkbox"> - 3<input type="checkbox"> - 4<input type="checkbox"> - 5
+                </div>
+                <div class="review-description">
+                    <p>Comments</p>
+                    <textarea type="textarea"  placeholder='Content'></textarea>
+                </div>
+                <button class="create-review-btn">Submit</button>
+        </div>
+        </form>
+    {% endif %}
 {% endblock content%}
-<br>
-Modify a review
-form

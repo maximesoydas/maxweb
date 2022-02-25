@@ -1,13 +1,24 @@
 body{
-    background-color: whitesmoke;
+    background-color: 	#FFF;
     font-family: Arial, Helvetica, sans-serif;
     cursor: default;
+    user-select:none;
 }
 
-/* Login Page // Home Page (if logged out) */
+/* LOGIN FORM *//* LOGIN FORM *//* LOGIN FORM *//* LOGIN FORM *//* LOGIN FORM *//* LOGIN FORM *//* LOGIN FORM */
 
+/* Login Page // Landing Page (if logged out) */
 
 /* navbar login page */
+
+ul.login-navbar{
+    list-style-type: none;
+    text-align: center;
+    overflow: hidden;
+    background-color: #333;
+    margin: -0.3em;
+    font-size: 2em;
+  }
 .login-navbar li {
     display: inline-block;
     font-size: 0.70em;
@@ -27,16 +38,6 @@ body{
     color: #4CAF50;
 }
 
-ul.login-navbar{
-    list-style-type: none;
-    text-align: center;
-    overflow: hidden;
-    background-color: #333;
-    margin: -0.3em;
-    font-size: 2em;
-  }
-
-/* LOGIN FORM */
 
 /* divs login page*/
 
@@ -96,7 +97,7 @@ ul.login-navbar{
     padding: 0.5em 2em 0.5em 2em;
 }
 
-/* REGISTER FORM */
+/* REGISTER FORM *//* REGISTER FORM *//* REGISTER FORM *//* REGISTER FORM *//* REGISTER FORM *//* REGISTER FORM */
 
 
 .form-register{
@@ -152,6 +153,561 @@ ul.login-navbar{
 .form-register button:hover{
     color: #4CAF50;
     background-color: #333;
+}
 
 
+/* FLOW *//* FLOW *//* FLOW *//* FLOW *//* FLOW *//* FLOW *//* FLOW *//* FLOW */
+
+
+/* Flow Page / Landing Page (when logged in) */
+
+
+ul.flow-navbar{
+    list-style-type: none;
+    overflow: hidden;
+    background-color: #333;
+    font-size: 1.5vw;
+    margin: -0.9vw;
+    padding: 0.4vw;
+}
+
+
+.flow-navbar li {
+    float: right;
+    font-size: 0.95vw;
+    margin: 0;
+    padding: 0;
+    /* width: fit-content; */
+    }
+        
+.flow-navbar li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+.flow-navbar li a:hover {
+    opacity: 70%;
+    color: #4CAF50;
+}
+
+.logo-navbar{
+    font-size: 1.2vw !important;
+    float: left !important; 
+    color: #4CAF50 !important;
+    text-align: center !important;
+    margin-left: 46.5vw !important;
+}
+
+
+.flow{
+    padding-top: 8vw;
+    text-align: center;
+    font-size: 1em;
+    width: 50%;
+    padding-left: 27vw;
+}
+
+
+.flow-ticket{
+    border: 3px solid #333;
+    padding: 0.5vw;
+    margin: 1vw;
+    background-color: white;
+    
+}
+
+.flow-review{
+    margin: 0;
+    border: 0.1vw solid #333;
+    padding: 1vw;
+    background-color: antiquewhite;
+}
+
+.flow-buttons{
+    margin: 0.7vw;
+    
+}
+
+.flow-buttons a{
+    font-size: 1.1vw;
+    padding: 5vw;
+    text-decoration: none;
+    color: #333;
+}    
+
+.flow-buttons a:hover{
+    text-decoration: none;
+    font:bold;
+    color: #333;
+}
+
+.flow-buttons button:hover{
+    border: #333 solid 0.19vw;
+    background-color: #4CAF50;
+    opacity: 90%;
+}
+
+.flow-create-ticket{
+    float: right;
+    margin-right: 0.8vw;
+    margin-top: -4vw;
+    border: #333 solid 0.13vw;
+    border-radius: 5% 0% 5% 0%;
+    text-align: center;
+
+}
+
+.flow-ask-review{
+    float:left;
+    margin-top: -4vw;
+    margin-left: 0.8vw;
+    border-radius: 5% 0% 5% 0%;
+    border: #333 solid 0.13vw;
+    text-align: center;
+}
+
+.flow-ticket{
+    text-align: left
+}
+.flow-ticket img{
+    padding: 1vw;
+}
+
+.flow-ticket button{
+    padding: 1vw;
+    margin-left: 36.4vw;
+    font-size: 0.80vw;
+    text-align: center;
+}
+
+
+.flow-ticket button:hover{
+    border: #333 solid 0.19vw;
+    background-color: #4CAF50;
+    opacity: 90%;
+}
+
+.flow-ticket a{
+    padding:0 ;
+    margin: 0;
+    text-decoration: none;
+    color: #333;
+}
+
+.flow-ticket a:hover{
+    text-decoration: none;
+    font:bold;
+    color: #333;
+}
+.flow-owner{
+    margin: 0;
+}
+.flow-timedate{
+    margin: 0;
+    padding-right: 0.7vw;
+    text-align: right !important;
+}
+
+.flow-title{
+    text-decoration: underline #333 2px;
+}
+
+/* SUBSCRIBERS *//* SUBSCRIBERS *//* SUBSCRIBERS *//* SUBSCRIBERS *//* SUBSCRIBERS *//* SUBSCRIBERS *//* SUBSCRIBERS */
+
+
+.subs{
+    text-align: center;
+    margin-top: 5vw;
+    padding: 0;
+    background-color: white;
+    
+}
+.subs h3{
+    text-align: center;
+    font-size: 1.1vw;
+    text-decoration: underline;}
+
+
+.subs form input{
+    font-size: 1.2vw;
+    background-color: white;
+    width: 20%;
+    margin:0
+}
+
+.subs form button{
+    font-size: 0.9vw ;
+    background-color: white;
+    /* margin-left: 3vw; */
+    padding: .2vw;
+    border-radius: 2em;
+}
+
+.subs form button:hover{
+    background-color: #333;
+    color: #4CAF50;
+}
+.subs form{
+    padding-top: 2vw;
+
+}
+.subscribers{
+    padding-top: 2vw;
+}
+.subscribers ul{
+    list-style-type: none;
+    text-align: left;
+    overflow: hidden;
+    padding-left: 35vw ;
+    width: 28%;
+    font-size: 1vw;
+    background-color: white;
+}
+.subscribers li{
+    border: #333 solid 0.1vw;
+    padding: 0.19vw;
+}
+
+
+.subscriptions{
+    padding-top: 4vw;
+}
+
+.subscriptions button{
+    float: right;
+    font-size: 0.6vw ;
+    padding: 0.19vw;
+    background-color: none;
+    border: none;
+}
+.subscriptions button:hover{
+    background-color: #333;
+    color: darkred;
+
+}
+.subscriptions ul{
+    list-style-type: none;
+    text-align: left;
+    overflow: hidden;
+    padding-left: 35vw ;
+    width: 28%;
+    font-size: 1vw;
+    background-color: white;
+}
+
+.subscriptions li{
+    border: #333 solid 0.1vw;
+    padding: 0.19vw;
+}
+
+
+/* CREATE TICKET *//* CREATE TICKET *//* CREATE TICKET *//* CREATE TICKET *//* CREATE TICKET *//* CREATE TICKET *//* CREATE TICKET *//* CREATE TICKET *//* CREATE TICKET *//* CREATE TICKET *//* CREATE TICKET *//* CREATE TICKET *//* CREATE TICKET *//* CREATE TICKET */
+
+.tickets{
+    text-align: center;    
+    border: #333 solid 0.1vw;
+    padding: 1.5vh;
+    width: 50% ;
+    margin:0vh auto;
+    margin-top: 5vh;
+}
+
+.tickets form{
+    margin-top: 1vh;
+    padding: 1vw;
+}
+
+.tickets h3{
+    padding-right: 32vh;
+    margin-top: 0.5vh;
+    text-decoration: underline;
+    font-size: 1vw;
+}
+
+.ticket-title p{
+    padding-right: 18.7vw;
+    padding-top: 2.5vh;
+    font-size: 1.4vh;
+}
+
+.ticket-title input[name="title"]{
+    width: 20vw;
+    font-size: 1.4vh;
+}
+
+.ticket-title h2{
+    font-size: 3vh;
+}
+.ticket-description p{
+    padding-right: 16.7vw;
+    padding-top: 2.5vh;
+    font-size: 1.4vh;
+}
+
+.ticket-description textarea{
+    width: 20vw;
+    height: 15vh;
+    font-size: 1.4vh;
+}
+
+
+
+.ticket-image p{
+    padding-right: 37vh;
+    padding-top: 2.5vh;
+    font-size: 1.4vh;
+}
+
+.ticket-image button{
+    margin-right: 33vh;
+    font-size: 1.1vh;
+    border-radius: 5vh;
+}
+.ticket-image button:hover{
+    background-color: #333;
+    color: #4CAF50;
+    border-radius: 5vh;
+}
+
+.create-ticket-btn{
+    margin-left: 20vw;
+    font-size: 1.1vh;
+    border-radius: 5vh;
+}
+.create-ticket-btn:hover{
+    background-color: #333;
+    color: #4CAF50;
+    border-radius: 5vh;
+}
+
+input[type='checkbox']{
+    width: 1.3vh;
+    height: 1.3vh;
+    background-color: white;
+    border-radius: 50%;
+    vertical-align: middle;
+    border: 0.1vh solid #ddd;
+    appearance: none;
+    -webkit-appearance: none;
+    outline: none;
+    cursor: pointer;
+    margin-left: 3vh;
+    font-size: 1vh;
+}
+input[type='checkbox']:checked {
+    background-color: gray;
+}
+
+
+.review{
+    text-align: center;    
+    border: #333 solid 0.1vw;
+    padding: 1.5vh;
+    /* color: white;
+    background-color: #333; */
+    width: 50% ;
+    margin:0 auto;
+}
+
+
+
+.review-title p{
+    padding-right: 18.7vw;
+    padding-top: 2.5vh;
+    font-size: 1.4vh;
+}
+
+.review-title input[name="title"]{
+    width: 20vw;
+    font-size: 1.4vh;
+}
+
+.review-title h2{
+    font-size: 3vh;
+}
+.review-description p{
+    padding-right: 16.7vw;
+    padding-top: 2.5vh;
+    font-size: 1.4vh;
+}
+
+.review-description textarea{
+    width: 20vw;
+    height: 15vh;
+    font-size: 1.4vh;
+}
+
+
+.review-note p{
+    padding-right: 38vh;
+    padding-top: 2.5vh;
+    font-size: 1.4vh;
+
+}
+
+
+.create-review-btn{
+    margin-top: 1vh;
+    margin-left: 20vw;
+    font-size: 1.1vh;
+    border-radius: 5vh;
+}
+.create-review-btn:hover{
+    background-color: #333;
+    color: #4CAF50;
+    border-radius: 5vh;
+}
+
+.tickets h2{
+    font-size: 2.5vh;
+}
+
+
+.review h3{
+    padding-right: 35vh;
+    text-decoration: underline;
+    font-size: 1.4vh;
+}
+
+
+
+.review{
+    font-size: 1.4vh;
+}
+
+
+/* REVIEW OF TICKET *//* REVIEW OF TICKET *//* REVIEW OF TICKET *//* REVIEW OF TICKET *//* REVIEW OF TICKET *//* REVIEW OF TICKET *//* REVIEW OF TICKET *//* REVIEW OF TICKET *//* REVIEW OF TICKET *//* REVIEW OF TICKET *//* REVIEW OF TICKET */
+
+
+h2.review-of-ticket-title{
+    padding-top: 2vh;
+    text-align: center;
+}
+
+h3.review-of-ticket-title2{
+    /* padding-right: 40em !important; */
+    width: 100%;
+    text-align: left;
+}
+
+
+/* YOUR POSTS *//* YOUR POSTS *//* YOUR POSTS *//* YOUR POSTS *//* YOUR POSTS *//* YOUR POSTS *//* YOUR POSTS *//* YOUR POSTS *//* YOUR POSTS *//* YOUR POSTS *//* YOUR POSTS *//* YOUR POSTS *//* YOUR POSTS *//* YOUR POSTS *//* YOUR POSTS */
+
+
+.posts{
+    margin: 0 auto;
+    margin-top: 2vw;
+    text-align: center;
+    font-size: 1em;
+    width: 50%;
+    /* border: #333 solid 0.1vw; */
+}
+
+h2.posts-title{
+    padding-top: 2vh;
+    text-align: center;
+
+}
+.posts-ticket{
+    border: 3px solid #333;
+    text-align: left;
+    padding: 0.5vw;
+    margin: 1vw;
+    background-color: white;
+    
+}
+
+.posts-review{
+    margin: 0;
+    border: 0.1vw solid #333;
+    padding: 1vw;
+    background-color: antiquewhite;
+}
+
+.posts-buttons{
+    margin: 0.7vw;
+    
+}
+
+.posts-ticket img{
+    padding: 1vw;
+}
+
+.posts-ticket button{
+    padding: 1vw;
+    margin-left: 36.4vw;
+    font-size: 0.80vw;
+    text-align: center;
+}
+
+
+.posts-ticket button:hover{
+    background-color: #4CAF50;
+    opacity: 90%;
+}
+
+.posts-ticket a{
+    padding:0 ;
+    margin: 0;
+    text-decoration: none;
+    color: #333;
+}
+
+.posts-ticket a:hover{
+    text-decoration: none;
+    font:bold;
+    color: #333;
+}
+.posts-owner{
+    margin: 0;
+}
+.posts-timedate{
+    margin: 0;
+    padding-right: 0.7vw;
+    text-align: right !important;
+}
+
+.posts-title{
+    text-decoration: underline #333 2px;
+}
+.posts-button{
+    display: flex;
+    margin: 0 auto;
+    padding-left: 27vw;   
+}
+
+button.modify_review{
+   padding: 0.1vh 1vh 0.1vh 1vh;   
+   margin: 0.5vw;
+}
+
+button.delete_review{
+    padding: 0.1vh 1vh 0.1vh 1vh;
+    margin: 0.5vw;
+ 
+
+}
+
+.modify_review a{
+
+    padding: 0.5vw 1.5vw 0vw 1.5vw;}
+
+.delete_review a{
+    padding: 0.5vw 1.5vw 0vw 1.5vw;
+
+}
+
+
+.ticket-image{
+    text-align: left;
+    padding-left: 14vw;
+}
+div.ticket-image img{
+    margin: 0 auto;;
+    text-align: left;
+    width: 9vw;
+    padding-bottom: 1vw;
 }
