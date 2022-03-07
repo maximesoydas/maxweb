@@ -3,10 +3,13 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import Profile
+# from .models import Profile
 from django.views.generic import ListView, DetailView
-from accounts.models import Profile
+# from accounts.models import Profile
 from .forms import RegisterForm
+from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
+from django.views import View
+from django.contrib.auth.models import User
 
 # Create your views here.
 
@@ -59,35 +62,115 @@ def register(request):
 
     return render(request, 'register.html', {})
 
+
 class ProfileListView(ListView):
-    model = Profile
-    template_name = 'profiles/subs.html'
-    context_object_name = 'profiles' 
-
-    # exclude your own user
-    def get_queryset(self):
-        return Profile.objects.all().exclude(user=self.request.user)
+    model = User
+    template_name = 'subs.html'
+    context_object_name = 'profiles'
 
 
-    
-class ProfileDetailView(DetailView):
-    model = Profile
-    template_name = 'profiles/detail.html'
 
-    def get_object(self, **kwargs):
-        pk = self.kwargs.get('pk')
-        view_profile = Profile.objects.get(pk=pk)
-        return view_profile
+@login_required
+def search_bar(request):
+    if request.method == 'GET':
+        search_query = request.GET.get('search_box', None)
+        qs = User.objects.filter(username__icontains = search_query)
+        return render(request, 'subs.html', {'results':qs})
+        '''
+        YourModel = Model where you want to run search
+        attibute = attribute on your model where you want to run search
+        search_results.html = is a seperate page where your search results will be displayed.
+        '''    
+# def follow_unfollow_profile(request):
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        view_profile = self.get_object()
-        my_profile = Profile.objects.get(user=self.request.user)
-        if view_profile.user in my_profile.following.all():
-            follow = True
-        else:
-            follow = False
-        context["follow"] = follow
+#     if request.method=="POST":
+#         my_profile = Profile.objects.get(user=request.user)
+#         pk = request.POST.get('profile_pk')
+#         obj = Profile.objects.get(pk=pk)
+
+#         if obj.user in my_profile.following.all():
+#             my_profile.following.remove(obj.user)
+#         else:
+#             my_profile.following.add(obj.user)
+#         return redirect(request.META.get('HTTP_REFERER'))
+#     return redirect('profile-list-view')
 
 
-        return context
+
+# def searchbar(self, request):
+#     if request.method == 'GET':
+#         search = request.GET.get('search')
+#         username = Profile.objects.all().exclude(user=self.request.user)
+#         return render(request,'searchbar.html', {'username': username})
+
+
+# class ProfileView(View):
+#     def get(self, request, pk, *args, **kwargs):
+
+#         profile = Profile.objects.get(pk=pk)
+#         user= profile.user
+#         followers = profile.followers.all()
+
+#         if len(followers) == 0:
+#             is_following = False
+
+#         for follower in followers:
+#             if follower == request.user:
+#                 is_following = True
+#                 break
+#             else:
+#                 is_following = False
+
+#         print(user)
+
+#         context = {
+#             'user': user,
+#             'followers':followers,
+#             'is_following': is_following,
+#         }
+#         print(context)
+#         return render(request, 'subs.html', context)
+
+
+
+# class AddFollower(LoginRequiredMixin, View):
+#     def post(self, request, pk, *args, **kwargs):
+#         profile = Profile.objects.get(pk=pk)
+#         profile.followers.add(request.user)
+#         print(profile.pk)
+#         print(profile.followers.all())
+
+#         return redirect('subs')
+
+# class RemoveFollower(LoginRequiredMixin, View):
+#     def post(self, request, pk, *args, **kwargs):
+#         profile = User.objects.get(pk=pk)
+#         profile.follower.remove(request.user)
+
+#         return redirect('subs')
+
+
+
+
+
+# class ProfileDetailView(DetailView):
+#     model = Profile
+#     template_name = 'profiles/detail.html'
+
+#     def get_object(self, **kwargs):
+#         pk = self.kwargs.get('pk')
+#         view_profile = Profile.objects.get(pk=pk)
+#         return view_profile
+
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         view_profile = self.get_object()
+#         my_profile = Profile.objects.get(user=self.request.user)
+#         if view_profile.user in my_profile.following.all():
+#             follow = True
+#         else:
+#             follow = False
+#         context["follow"] = follow
+
+
+#         return context
