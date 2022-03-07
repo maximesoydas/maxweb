@@ -2,7 +2,7 @@
 from django.conf import settings
 from statistics import mode
 from django.db import models
-from website.models import Ticket
+from website.models import Post
 from django.contrib.auth.models import User
 
 # # Create your models here.

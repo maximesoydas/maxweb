@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 from accounts import views
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
-
+from django.views.generic import ListView
+from .models import Post
 # Create your views here.
 
 def home(request):
@@ -11,7 +12,12 @@ def home(request):
 # @login_required
 
 def flow(request):
-    return render(request, 'flow.html')
+
+    context={
+        'posts': Post.objects.all()
+    }
+
+    return render(request, 'flow.html', context)
 
 def subs(request):
     return render(request, 'subs.html')
@@ -33,3 +39,6 @@ def modify_ticket(request):
 
 def modify_review(request):
     return render(request, 'reviews/modify_review.html')
+
+# class PostListView(ListView):
+#     model = Post

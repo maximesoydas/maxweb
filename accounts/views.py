@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.views.generic import ListView, DetailView
 # from accounts.models import Profile
 from .forms import RegisterForm
-from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
+# from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from django.views import View
 from django.contrib.auth.models import User
 
