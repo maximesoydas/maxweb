@@ -13,30 +13,48 @@
 
 
 <div class="subs">
-    <form class="form-search-users" action="POST">
+    {% comment %} <form method='get' class="form-search-users" action="POST">
         <h3>Add User</h3>
         <input type="text" name="search-users" class="-subs-search" placeholder="Username">
         <button>Send</button>
     </form>
+ {% endcomment %}
+
+
+    <form type="get" action="{% url 'search' %}" style="margin: 0">
+        <input  id="search_box" type="text" name="search_box"  placeholder="Add User..." >
+        <button id="search_submit" type="submit" >ADD</button>
+    </form>
 
     <div class="subscriptions">
-        <h3>Subscriptions</h3>
-        <ul>
-            <li>jean_5679<button> REMOVE</button></li>
-            <li>sarahj<button>REMOVE</button></li>
-            <li>severine123<button>REMOVE</button></li>
+        <h3>All Subscriptions</h3>
+        {% for profile in profiles %}
+        {% if profile.username == user.username %}
+            {% else %}
+            <ul>
+                <li>  {{profile}}
+                    <button type="submit">REMOVE</button>
+                </li>  
+                    {% comment %} <form method="POST" action="{% url 'remove-follower' profile.pk %}">
+                    {% csrf_token %}
+                 {% endcomment %}
+               
+                {% comment %} </form> {% endcomment %}
+            </ul>
+            {% endif %}
+        {% endfor %}
 
-        </ul>
 
-    </div>
+</div>
 
-    <div class="subscribers">
-        <h3>Subscribers</h3>
-        <ul>    
-            <li>jean_5679 </li>
-            <li>severine123 </li>
-        </ul>
-    </div>
+
+        <div class="subscribers">
+            <h3>Subscribers</h3>
+            <ul>    
+                <li>jean_5679 </li>
+                <li>severine123 </li>
+            </ul>
+        </div>
 
 
 </div>

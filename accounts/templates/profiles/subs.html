@@ -26,7 +26,7 @@
     {% for profile in profiles %}
        
             <ul>
-                <li>{{profile}}<button> <a href="{% url 'profile-detail-view' profile.pk %}">  See profile</a></button></li>  
+                <li>{{profile.pk}}<button> <a href="{% url 'accounts:profile-detail-view' profile.pk %}"> See profile</a></button></li>  
             </ul>
                 {% endfor %}
     </div>
