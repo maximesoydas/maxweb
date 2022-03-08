@@ -2,10 +2,8 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-<ul>
-    <li><a href="{% url 'dashboard' %}"> Dashboard</a></li>
-    <li><a href="{% url 'logout' %}">Logout </a></li>
-    </ul>
+    {% include 'flow.html' %}
+
     {% comment %} <a href="{% url 'flow' %}"> Home</a> {% endcomment %}
     {% else %}
     <ul class="login-navbar">

@@ -27,33 +27,21 @@
     </form>
 
     <div class="subscriptions">
-        <h3>All Subscriptions</h3>
-        {% for profile in profiles %}
-        {% if profile.username == user.username %}
-            {% else %}
-            <ul>
-                <li>  {{profile}}
-                    <button type="submit">REMOVE</button>
-                </li>  
-                    {% comment %} <form method="POST" action="{% url 'remove-follower' profile.pk %}">
-                    {% csrf_token %}
-                 {% endcomment %}
-               
-                {% comment %} </form> {% endcomment %}
-            </ul>
-            {% endif %}
-        {% endfor %}
+        <h3>Followers</h3>
+        <ul>
 
+            {% for follower in followers %}
+            <li>{{follower.following.username}} <button>REMOVE</button></li>
+            {% endfor %}
+        </ul>
 
 </div>
-
-
         <div class="subscribers">
-            <h3>Subscribers</h3>
-            <ul>    
-                <li>jean_5679 </li>
-                <li>severine123 </li>
-            </ul>
+            <h3>Following</h3>
+            {% for follow in following %}
+            <ul>
+                <li> {{follow.follower.username}} </li>  
+            {% endfor %}
         </div>
 
 

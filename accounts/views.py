@@ -5,6 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 # from .models import Profile
 from django.views.generic import ListView, DetailView
+
+from accounts.models import UserFollows
 # from accounts.models import Profile
 from .forms import RegisterForm
 # from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
@@ -67,15 +69,28 @@ class ProfileListView(ListView):
     model = User
     template_name = 'subs.html'
     context_object_name = 'profiles'
+    
 
-
-
+def follow_get(request):
+    following = UserFollows.objects.filter(following=request.user)
+    followers = UserFollows.objects.filter(follower=request.user)
+    context = {
+         'followers':followers,
+         'following':following
+         }
+    return render(request, 'subs.html', context)
+    
 @login_required
 def search_bar(request):
     if request.method == 'GET':
         search_query = request.GET.get('search_box', None)
-        qs = User.objects.filter(username__icontains = search_query)
-        return render(request, 'subs.html', {'results':qs})
+        try:
+            user_to_follow = User.objects.get(username= search_query)
+            userfollow = UserFollows.objects.create(following=user_to_follow, follower=request.user)
+        except Exception as e:
+            print(e)
+            
+        return redirect('subs')
         '''
         YourModel = Model where you want to run search
         attibute = attribute on your model where you want to run search

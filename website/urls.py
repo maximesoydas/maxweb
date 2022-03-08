@@ -3,13 +3,13 @@ from django import views
 from django.urls import path
 from . import views
 from django.contrib.auth.views import LoginView, LogoutView
-from accounts.views import ProfileListView
+from accounts.views import follow_get
 # from .views import
 
 urlpatterns = [
-    path('', LoginView.as_view(), name="home"),
+    path('', LoginView.as_view(redirect_authenticated_user=True), name="home"),
     path('flow/', views.flow, name="flow"),
-    path('subs/', ProfileListView.as_view(), name="subs"),
+    path('subs/', follow_get, name="subs"),
     path('posts/', views.posts, name="posts"),
     path('review/', views.review, name="review"),
     path('ticket/', views.ticket, name="ticket"),
