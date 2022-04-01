@@ -18,31 +18,35 @@
         <input type="text" name="search-users" class="-subs-search" placeholder="Username">
         <button>Send</button>
     </form>
- {% endcomment %}
+    {% endcomment %}
 
 
     <form type="get" action="{% url 'search' %}" style="margin: 0">
-        <input  id="search_box" type="text" name="search_box"  placeholder="Add User..." >
-        <button id="search_submit" type="submit" >ADD</button>
+        <input id="search_box" type="text" name="search_box" placeholder="Add User...">
+        <button id="search_submit" type="submit">ADD</button>
     </form>
 
     <div class="subscriptions">
-        <h3>Followers</h3>
+        <h3>Following</h3>
         <ul>
-
-            {% for follower in followers %}
-            <li>{{follower.following.username}} <button>REMOVE</button></li>
+            {% for contact in follower %}
+            <form action="{% url 'deletedata' contact.following.id %}" method="post">
+                    <li>{{contact.following.username}}
+                    {% csrf_token %}
+                    <button>Remove</button>
+                </li>
+                </form>
             {% endfor %}
         </ul>
 
-</div>
-        <div class="subscribers">
-            <h3>Following</h3>
-            {% for follow in following %}
-            <ul>
-                <li> {{follow.follower.username}} </li>  
+    </div>
+    <div class="subscribers">
+        <h3>Followers</h3>
+        <ul>
+            {% for contact in following %}
+            <li> {{contact.follower.username}} </li>
             {% endfor %}
-        </div>
+    </div>
 
 
 </div>

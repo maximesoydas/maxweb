@@ -17,6 +17,7 @@ urlpatterns = [
     path('admin/', admin.site.urls, name="admin_url"),
     path('register/',users_views.register, name='register'),
     path('', users_views.search_bar , name='search'),
+    path('delete/<int:id>/', views.delete_userfollow, name='deletedata')
     # path('subs/',ProfileListView.as_view(),name="subs"),
     # path('<pk>/', ProfileDetailView.as_view(), name ='profile-detail-view'),
     # path('switch_follow', follow_unfollow_profile, name ='follow-unfollow-view'),

@@ -1,5 +1,5 @@
 from multiprocessing import context
-from django.shortcuts import render,redirect
+from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -15,11 +15,15 @@ from django.contrib.auth.models import User
 
 # Create your views here.
 
+
 def indexView(request):
-    return render(request,'index.html')
+    return render(request, 'index.html')
+
+
 @login_required
 def dashboardView(request):
-    return render(request,'dashboard.html')
+    return render(request, 'dashboard.html')
+
 
 def registerView(request):
     if request.method == "POST":
@@ -28,29 +32,30 @@ def registerView(request):
 
             form = AuthenticationForm(request)
             form.fields['username'].widget.attrs.update({
-                    'placeholder': 'Name'
-                })
+                'placeholder': 'Name'
+            })
             form.fields['password'].widget.attrs.update({
-                    'placeholder': 'Password'
-                })
+                'placeholder': 'Password'
+            })
 
             context = RequestContext(request, {
-                'form' : form,
+                'form': form,
             })
             return HttpResponse(template.render(context))
             form.save()
             return redirect('login_url')
     else:
         form = UserCreationForm
-    return render(request,'registration/register.html', {'form':form})
+    return render(request, 'registration/register.html', {'form': form})
+
 
 def register(request):
     if request.method == 'GET':
-        form  = RegisterForm()
+        form = RegisterForm()
         context = {'form': form}
         return render(request, 'register.html', context)
     if request.method == 'POST':
-        form  = RegisterForm(request.POST)
+        form = RegisterForm(request.POST)
     if form.is_valid():
         form.save()
         user = form.cleaned_data.get('username')
@@ -69,33 +74,46 @@ class ProfileListView(ListView):
     model = User
     template_name = 'subs.html'
     context_object_name = 'profiles'
-    
+
 
 def follow_get(request):
     following = UserFollows.objects.filter(following=request.user)
-    followers = UserFollows.objects.filter(follower=request.user)
+    follower = UserFollows.objects.filter(follower=request.user)
     context = {
-         'followers':followers,
-         'following':following
-         }
+        'follower': follower,
+        'following': following
+    }
     return render(request, 'subs.html', context)
-    
+
+
+def delete_userfollow(request, id):
+    if request.method == 'POST':
+        print(id)
+        print("Username")
+        print(request.user.id)
+        if id == request.user.id:
+            pi = UserFollows.objects.filter(following=id)
+            pi.delete()
+        else:
+            pi = UserFollows.objects.get(following=id)
+            pi.delete()
+        return redirect('subs')
+
+
 @login_required
 def search_bar(request):
     if request.method == 'GET':
         search_query = request.GET.get('search_box', None)
         try:
-            user_to_follow = User.objects.get(username= search_query)
-            userfollow = UserFollows.objects.create(following=user_to_follow, follower=request.user)
+            user_to_follow = User.objects.get(username=search_query)
+            userfollow = UserFollows.objects.create(
+                following=user_to_follow, follower=request.user)
         except Exception as e:
             print(e)
-            
+
         return redirect('subs')
-        '''
-        YourModel = Model where you want to run search
-        attibute = attribute on your model where you want to run search
-        search_results.html = is a seperate page where your search results will be displayed.
-        '''    
+
+
 # def follow_unfollow_profile(request):
 
 #     if request.method=="POST":
@@ -109,7 +127,6 @@ def search_bar(request):
 #             my_profile.following.add(obj.user)
 #         return redirect(request.META.get('HTTP_REFERER'))
 #     return redirect('profile-list-view')
-
 
 
 # def searchbar(self, request):
@@ -147,7 +164,6 @@ def search_bar(request):
 #         return render(request, 'subs.html', context)
 
 
-
 # class AddFollower(LoginRequiredMixin, View):
 #     def post(self, request, pk, *args, **kwargs):
 #         profile = Profile.objects.get(pk=pk)
@@ -163,9 +179,6 @@ def search_bar(request):
 #         profile.follower.remove(request.user)
 
 #         return redirect('subs')
-
-
-
 
 
 # class ProfileDetailView(DetailView):
