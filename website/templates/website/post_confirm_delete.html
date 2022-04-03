@@ -14,20 +14,12 @@
 
 <div class='tickets' style='margin-top:30px'>
     <form method='POST'>
+        {% csrf_token %}
         <div class="ticket-title">
-            <h2>Create a ticket</h2>
-            <p>Title</p>
-            <input type='text' name='title' placeholder='Your Ticket Title'>
+            <h2>Are you sure you want to delete the post "{{ object.title }}" ?</h2>
         </div>
-        <div class="ticket-description">
-            <p>Description </p>
-            <textarea name='content' placeholder='Content'></textarea>
-        </div>
-        <div class="ticket-image">
-            <p>Image</p>
-            <button type='fichier'>Download File</button>
-        </div>
-        <button class="create-ticket-btn" type='submit'>Create Ticket</button>
+        <button class="delete-ticket-btn" type='submit'>Yes, Delete</button>
+        <button  class="cancel-ticket-btn"> <a class="cancel-ticket-btn" href="{% url 'ticket-detail' object.id %}">Cancel </a> </button>
     </form> 
 </div>
 {% endif %}

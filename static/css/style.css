@@ -711,3 +711,31 @@ div.ticket-image img{
     width: 9vw;
     padding-bottom: 1vw;
 }
+
+
+.delete-ticket-btn{
+
+    background-color: black;
+    color: white;
+    text-decoration: none;
+      border-radius: 2% ;
+}
+
+
+
+.delete-ticket-btn:hover{
+
+    background-color: darkred;
+    color: white;
+    text-decoration: none;
+    border-radius: 2% ;
+}
+
+.cancel-ticket-btn{
+
+    background-color: black;
+    color: white;
+    text-decoration: none;
+      border-radius: 2% ;
+}
+

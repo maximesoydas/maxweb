@@ -1,11 +1,16 @@
+from distutils.command.upload import upload
 from django.db import models
 from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
 # from accounts.models import Profile
 from django.contrib.auth.models import User
 # Create your models here.
+from django.urls import reverse
+
+
 class Post(models.Model):
     title = models.CharField(max_length=100)
+    header_image = models.ImageField(null=True, blank=True, upload_to ="images/")
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
     updated = models.DateTimeField(auto_now=True)
@@ -15,6 +20,9 @@ class Post(models.Model):
         return str(self.content)[:30]
 
 
+    def get_absolute_url(self):
+        return reverse("flow")
+    
     # class Meta:
     #     # newest at the top
     #     ordering = ('-created',)

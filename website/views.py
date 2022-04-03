@@ -1,10 +1,12 @@
+from dataclasses import fields
+from re import I
 from django.shortcuts import render, redirect
 from accounts import views
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
-from django.views.generic import ListView
+from django.views.generic import ListView, CreateView, DetailView,UpdateView, DeleteView
 from .models import Post
-# Create your views here.
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 def home(request):
     return render(request, 'home.html')
@@ -18,6 +20,46 @@ def flow(request):
     }
 
     return render(request, 'flow.html', context)
+
+class PostCreateView(LoginRequiredMixin, CreateView):
+    model = Post
+    fields = ['title', 'content', 'header_image']
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Post
+    fields = ['title', 'content', 'header_image']
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == post.author:
+            return True
+        else:
+            return False
+
+
+class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Post
+    success_url = '/'
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == post.author:
+            return True
+        else:
+            return False
+
+class PostListView(ListView):
+    model = Post
+    context_object_name = 'posts'
+    ordering = ['-date_posted']
+
+
+class PostDetailView(DetailView):
+    model = Post
 
 def subs(request):
     return render(request, 'subs.html')
@@ -40,5 +82,3 @@ def modify_ticket(request):
 def modify_review(request):
     return render(request, 'reviews/modify_review.html')
 
-# class PostListView(ListView):
-#     model = Post

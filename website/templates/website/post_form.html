@@ -1,0 +1,45 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+    {% if user.is_authenticated %}
+        <ul class="flow-navbar">
+            <li>
+                <a href="{% url 'logout' %}">Logout</a>
+            </li>
+            <li>
+                <a href="{% url 'subs' %}">Subscribers</a>
+            </li>
+            <li>
+                <a href="{% url 'posts' %}">Posts</a>
+            </li>
+            <li>
+                <a href="{% url 'flow' %}">Flow</a>
+            </li>
+            <li class="logo-navbar">
+                <a href="{% url 'flow' %}">LITReview</a>
+            </li>
+        </ul>
+        <div class="tickets" style="margin-top:30px">
+            <form enctype="multipart/form-data" method="POST">
+                {% csrf_token %}
+                <div class="ticket-title">
+                    <h2>Create a ticket</h2>
+                    <p>
+                        Title
+                    </p>
+                    <input type='text' name='title' placeholder='Your Ticket Title'>
+                </div>
+                <div class="ticket-description">
+                    <p>
+                        Description
+                    </p>
+                    <textarea name='content' placeholder='Content'></textarea>
+                </div>
+                <div class="ticket-image">
+                    <input type="file" name="header_image" accept=".doc, .docx, .pdf, .txt, .png, .jpg, .jpeg">
+                </div>
+                <button class="create-ticket-btn" type='submit'>Create Ticket</button>
+            </form>
+        </div>
+    {% endif %}
+{% endblock content %}

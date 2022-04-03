@@ -1,0 +1,80 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+    {% if user.is_authenticated %}
+        <ul class="flow-navbar">
+            <li>
+                <a href="{% url 'logout' %}">Logout</a>
+            </li>
+            <li>
+                <a href="{% url 'subs' %}">Subscribers</a>
+            </li>
+            <li>
+                <a href="{% url 'posts' %}">Posts</a>
+            </li>
+            <li>
+                <a href="{% url 'flow' %}">Flow</a>
+            </li>
+            <li class='logo-navbar'>
+                <a href="{% url 'flow' %}">LITReview</a>
+            </li>
+        </ul>
+        <div class="flow">
+            <!-- Create a ticket - Ask a review buttons -->
+            {% if object.author == user %}
+                <div class="flow-buttons">
+                    <button class="flow-ask-review">
+                        <a href="{% url 'post-update' object.id %}">Update</a>
+                    </button>
+                    <button class="flow-create-ticket" >
+                        <a href="{% url 'post-delete' object.id %}">Delete</a>
+                    </button>
+                </div>
+            {% endif %}
+            {{ object }}
+            <!-- The current flow-ticket's data -->
+            <div class='flow-ticket'>
+                {% if object.author == user %}
+                    <p class="flow-owner">
+                        Your Ticket !
+                    </p>
+                {% else %}
+                    <p class="flow-owner">
+                        {{ object.author }}
+                    </p>
+                {% endif %}
+                <p class="flow-timedate">
+                    {{ object.date_posted|date:"H:i, d F Y" }}
+                </p>
+                <h3 class="flow-ratings-comment">{{ object.title }}</h3>
+                <p class="flow-description">
+                    {{ object.content }}
+                </p>
+                  
+                {% if post.header_image %}
+                        <img src="{{ post.header_image.url }}">
+                {% endif %}
+                {% comment %} <div class='flow-review'>
+                        <h3>Ticket - jean8597</h3>
+                        <h3 class="flow-title">The Origin of Species - Charles Darwin</h3>
+                        <img style=width:20%; src="{% static 'images/img1.jpg' %}" alt="img1">
+                </div> {% endcomment %}
+            </div>
+            {% comment %}         
+        <div class='flow-ticket'>
+                <p class="flow-owner"> sarahj asked for a review </p>
+                <p class="flow-timedate">14:00, 26 August 2020</p>
+                <p class="flow-description"> An excellent read - I absolutely recommend it !</p>
+                <button> <a href="{% url 'review_of_ticket'%}">Create a Review</a></button>  
+        </div>
+        
+        <div class='flow-ticket'>
+                <p class="flow-owner"> jean_5679 asked for a review </p>
+                <p class="flow-timedate">14:00, 26 August 2020</p>
+                <h3 class="flow-title">The Origin of Species - Charles Darwin</h3>
+                <p class="flow-description"> I am looking for an opnion about this subject, please,thanks !</p>
+                <img style=width:20%; src="{% static 'images/img1.jpg' %}" alt="img1">
+        </div>
+            </div> {% endcomment %}
+        {% endif %}
+    {% endblock content %}
