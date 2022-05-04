@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, CreateView, DetailView,UpdateView, DeleteView
 from .models import Post
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from accounts.models import UserFollows
 
 def home(request):
     return render(request, 'home.html')
@@ -14,10 +15,14 @@ def home(request):
 # @login_required
 
 def flow(request):
-
-    context={
-        'posts': Post.objects.all()
+    following = UserFollows.objects.filter(following=request.user)
+    follower = UserFollows.objects.filter(follower=request.user)
+    context = {
+        'follower': follower,
+        'following': following,
+        'posts': Post.objects.all().order_by('-date_posted'),
     }
+    ordering = ['-date_posted']
 
     return render(request, 'flow.html', context)
 

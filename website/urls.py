@@ -9,7 +9,7 @@ from accounts.views import follow_get
 
 urlpatterns = [
     path('', LoginView.as_view(redirect_authenticated_user=True), name="home"),
-    path('flow/', PostListView.as_view(template_name="flow.html"), name="flow"),
+    path('flow/', views.flow, name="flow"),
     path('post/<int:pk>/', PostDetailView.as_view(), name="ticket-detail"),
     path('subs/', follow_get, name="subs"),
     path('post/<int:pk>/update/', PostUpdateView.as_view(), name="post-update"),

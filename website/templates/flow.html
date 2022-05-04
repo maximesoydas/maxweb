@@ -17,45 +17,48 @@
                 <button class="flow-ask-review"> <a  href="{% url 'ticket' %}"> Create a ticket </a></button>
                 <button class="flow-create-ticket"> <a href="{% url 'review'%}"> Create a Review</a></button>
         </div>
-        {% for post in posts %}
-        {{post}}
 
-        <!-- The current flow-ticket's data -->
-        <div class='flow-ticket'>
-                {% if post.author == user %}
-                <p class="flow-owner"> Your Ticket !</p>
-                {% else %}
-                <p class="flow-owner"> {{post.author}}</p>
+        {% for post in posts %}
+                {% comment %} {{ post.author }} {% endcomment %}
+                {% for contact in follower %}
+                 {{ contact.following }}
+                 {% if post.author == contact.following %}
+                 <!-- The current flow-ticket's data -->
+                 <div class='flow-ticket'>
+                         {% if post.author == user %}
+                         <p class="flow-owner"> Your Ticket !</p>
+                         {% else %}
+                         <p class="flow-owner"> {{ post.author }}</p>
+                         {% endif %}
+                         <p class="flow-timedate">{{ post.date_posted|date:"H:i, d F Y" }}                </p>
+                         <h3 class="flow-ratings-comment"> <a href="{% url 'ticket-detail' post.id %}">  {{ post.title }} </a> </h3>
+                        <p class="flow-description">{{ post.content }}</p>
+                        {% if post.header_image %}
+                        <img src="{{ post.header_image.url }}">
+                        {% endif %}
+                </div>
                 {% endif %}
-                <p class="flow-timedate">{{post.date_posted|date:"H:i, d F Y"}}                </p>
-                <h3 class="flow-ratings-comment"> <a href="{% url 'ticket-detail' post.id %}">  {{post.title}} </a> </h3>
-                <p class="flow-description">{{post.content}}</p>
-                {% if post.header_image %}
-                <img src="{{ post.header_image.url }}">
+                {% endfor %}
+                
+                {% if  post.author == user %}
+                <div class='flow-ticket'>
+                        {% if post.author == user %}
+                        <p class="flow-owner"> Your Ticket !</p>
+                        {% else %}
+                        <p class="flow-owner"> {{ post.author }}</p>
+                        {% endif %}
+                        <p class="flow-timedate">{{ post.date_posted|date:"H:i, d F Y" }}                </p>
+                        <h3 class="flow-ratings-comment"> <a href="{% url 'ticket-detail' post.id %}">  {{ post.title }} </a> </h3>
+                       <p class="flow-description">{{ post.content }}</p>
+                       {% if post.header_image %}
+                       <img src="{{ post.header_image.url }}">
+                       {% endif %}
+               </div>
+                
+                
                 {% endif %}
-{% comment %}                 
-                <div class='flow-review'>
-                        <h3>Ticket - jean8597</h3>
-                        <h3 class="flow-title">The Origin of Species - Charles Darwin</h3>
-                        <img style=width:20%; src="{% static 'images/img1.jpg' %}" alt="img1">
-                </div> {% endcomment %} 
-        </div>
+                
         {% endfor %}
-{% comment %}         
-        <div class='flow-ticket'>
-                <p class="flow-owner"> sarahj asked for a review </p>
-                <p class="flow-timedate">14:00, 26 August 2020</p>
-                <p class="flow-description"> An excellent read - I absolutely recommend it !</p>
-                <button> <a href="{% url 'review_of_ticket'%}"> Create a Review</a></button>  
-        </div>
-        
-        <div class='flow-ticket'>
-                <p class="flow-owner"> jean_5679 asked for a review </p>
-                <p class="flow-timedate">14:00, 26 August 2020</p>
-                <h3 class="flow-title">The Origin of Species - Charles Darwin</h3>
-                <p class="flow-description"> I am looking for an opnion about this subject, please,thanks !</p>
-                <img style=width:20%; src="{% static 'images/img1.jpg' %}" alt="img1">
-        </div>
-</div> {% endcomment %}
+
 {% endif %}
 {% endblock content%}
