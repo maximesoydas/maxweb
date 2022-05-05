@@ -22,24 +22,70 @@
         <div class="tickets" style="margin-top:30px">
             <form enctype="multipart/form-data" method="POST">
                 {% csrf_token %}
-                <div class="ticket-title">
-                    <h2>Create a ticket</h2>
-                    <p>
-                        Title
-                    </p>
+
+                {% for field in form %}
+                    {% if field.name == "title" %}
+                    <p> Title </p>
+                    {% if field.value == None %}
                     <input type='text' name='title' placeholder='Your Ticket Title'>
-                </div>
-                <div class="ticket-description">
-                    <p>
-                        Description
-                    </p>
-                    <textarea name='content' placeholder='Content'></textarea>
-                </div>
-                <div class="ticket-image">
-                    <input type="file" name="header_image" accept=".doc, .docx, .pdf, .txt, .png, .jpg, .jpeg">
-                </div>
+                    {% else %}
+                    <input type='text' name='title' value = "{{ field.value }}" placeholder='Your Ticket Title'>
+                    {% endif %}
+                    {% endif %}
+
+
+                    {% if field.name == "content" %}
+
+                    <div class="ticket-description">
+                        <p>
+                            Description
+                        </p>
+                        {% if field.value == None %}
+                        <textarea name='content' placeholder='Content'></textarea>
+                        {% else %}
+                        <textarea name='content'> {{field.value}} </textarea>
+                        {% endif %}
+                    </div>
+
+                    {% endif %}
+
+                    {% if field.name == "header_image" %}
+                    
+                    {% if field.value == None %}
+                    <div class="ticket-image">
+                        <input type="file" name="header_image" accept=".doc, .docx, .pdf, .txt, .png, .jpg, .jpeg">
+                    </div>
+                    {% else %}
+                    <div class="ticket-image">
+                        <input type="file" name="header_image" accept=".doc, .docx, .pdf, .txt, .png, .jpg, .jpeg">
+                        <br>
+                       <img src= "../../../media/{{field.value}}" > </img>
+                    </div>
+                    {% endif %}
+                    {% endif %}
+                {% endfor %}
                 <button class="create-ticket-btn" type='submit'>Create Ticket</button>
             </form>
         </div>
     {% endif %}
 {% endblock content %}
+
+
+
+<p>
+    Title
+</p>
+<input type='text' name='title' placeholder='Your Ticket Title'>
+</div>
+<div class="ticket-description">
+<p>
+    Description
+</p>
+<textarea name='content' placeholder='Content'></textarea>
+</div>
+<div class="ticket-image">
+<input type="file" name="header_image" accept=".doc, .docx, .pdf, .txt, .png, .jpg, .jpeg">
+</div>
+<button class="create-ticket-btn" type='submit'>Create Ticket</button>
+</form>
+</div>

@@ -21,7 +21,6 @@
         {% for post in posts %}
                 {% comment %} {{ post.author }} {% endcomment %}
                 {% for contact in follower %}
-                 {{ contact.following }}
                  {% if post.author == contact.following %}
                  <!-- The current flow-ticket's data -->
                  <div class='flow-ticket'>
@@ -39,7 +38,6 @@
                 </div>
                 {% endif %}
                 {% endfor %}
-                
                 {% if  post.author == user %}
                 <div class='flow-ticket'>
                         {% if post.author == user %}
