@@ -15,9 +15,11 @@ class Post(models.Model):
     content = models.TextField()
     updated = models.DateTimeField(auto_now=True)
     date_posted = models.DateTimeField(auto_now_add=True)
+    reviewed = models.CharField(max_length=7, default='false')
+    type=models.CharField(max_length=7, default='post')
 
     def __str__(self):
-        return str(self.content)[:30]
+        return str(self.title)[:30]
 
 
     def get_absolute_url(self):
@@ -34,6 +36,13 @@ class Review(models.Model):
         # validates that rating must be between 0 and 5
         validators=[MinValueValidator(0), MaxValueValidator(5)])
     headline = models.CharField(max_length=128)
-    body = models.CharField(max_length=8192, blank=True)
-    user = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    time_created = models.DateTimeField(auto_now_add=True)
+    content = models.TextField()
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    date_posted = models.DateTimeField(auto_now_add=True)
+    type=models.CharField(max_length=7, default='review')
+    def __str__(self):
+        return str(self.headline)[:30]
+
+
+    def get_absolute_url(self):
+        return reverse("flow")

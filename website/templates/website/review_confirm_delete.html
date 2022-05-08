@@ -1,0 +1,26 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+
+{% if user.is_authenticated %}
+<ul class="flow-navbar">
+    <li><a href="{% url 'logout' %}">Logout </a></li>
+    <li><a href="{% url 'subs'%}"> Subscribers</a></li>
+    <li><a href="{% url 'posts'%}"> Posts</a></li>
+    <li><a href="{% url 'flow' %}"> Flow</a></li>
+    <li class='logo-navbar'><a href="{% url 'flow'%}">LITReview</a></li>
+</ul>
+
+
+<div class='tickets' style='margin-top:30px'>
+    <form method='POST'>
+        {% csrf_token %}
+        <div class="ticket-title">
+            <h2>Are you sure you want to delete the post "{{ object.title }}" ?</h2>
+        </div>
+        <button class="delete-ticket-btn" type='submit'>Yes, Delete</button>
+        <button  class="cancel-ticket-btn"> <a class="cancel-ticket-btn" href="{% url 'ticket-detail' object.id %}">Cancel </a> </button>
+    </form> 
+</div>
+{% endif %}
+{% endblock content%}

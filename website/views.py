@@ -5,9 +5,13 @@ from accounts import views
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, CreateView, DetailView,UpdateView, DeleteView
-from .models import Post
+from .models import Post, Review
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from accounts.models import UserFollows
+from extra_views import CreateWithInlinesView, UpdateWithInlinesView, InlineFormSetFactory
+from itertools import zip_longest
+import operator
+from operator import itemgetter
 
 def home(request):
     return render(request, 'home.html')
@@ -17,14 +21,108 @@ def home(request):
 def flow(request):
     following = UserFollows.objects.filter(following=request.user)
     follower = UserFollows.objects.filter(follower=request.user)
+    posts = [] 
+    reviews = []
+    for post in Post.objects.all().order_by('-date_posted'):
+        posts.append(post)
+    for review in Review.objects.all().order_by('-date_posted'):
+        reviews.append(review)
+
+    posts_reviews = []
+
+    for post in posts:
+        if post.author == request.user:
+            posts_reviews.append(post)
+        for contact in follower:
+            if post.author == contact.following:
+                posts_reviews.append(post)
+    for review in reviews:
+        if review.author == request.user:
+            posts_reviews.append(review)
+        for contact in follower:
+            if review.author == contact.following:
+                posts_reviews.append(review)
+
+    posts_reviews.sort(key=lambda x: x.date_posted, reverse=True)
+    # print(post_reviews)
+    
+    
+    
+    for p in posts_reviews:
+      print(p.type)
+      
+
     context = {
         'follower': follower,
         'following': following,
-        'posts': Post.objects.all().order_by('-date_posted'),
+        'post_review': posts_reviews
     }
-    ordering = ['-date_posted']
 
     return render(request, 'flow.html', context)
+
+
+class ReviewMetaInline(InlineFormSetFactory):
+    model = Review
+    fields = ['ticket','rating', 'headline', 'content',]
+    factory_kwargs = {'extra': 1, 'max_num': None,
+                      'can_order': False, 'can_delete': False}
+    formset_kwargs = {'auto_id': 'my_id_%s'}
+
+class CreateReviewView(CreateWithInlinesView):
+    model = Post
+    inlines = [ReviewMetaInline]
+    fields = ['title', 'content', 'header_image']
+    template_name = 'website/review_form.html'
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return self.object.get_absolute_url()
+
+class UpdateReviewView(UpdateWithInlinesView):
+    model = Post
+    inlines = [ReviewMetaInline]
+    fields = ['title', 'content', 'header_image']
+    template_name = 'website/review_form.html'
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+
+    def get_success_url(self):
+        return self.object.get_absolute_url()
+
+class ReviewCreateView(LoginRequiredMixin, CreateView):
+    model = Review
+    fields = [ 'ticket', 'headline','rating', 'content',]
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+class ReviewDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Review
+    success_url = '/'
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == post.author:
+            return True
+        else:
+            return False
+
+class ReviewUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Review
+    fields = [ 'ticket', 'headline','rating', 'content',]
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        self.object = form.save()
+        return super().form_valid(form)
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == post.author:
+            return True
+        else:
+            return False
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
@@ -47,7 +145,6 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         else:
             return False
 
-
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
     success_url = '/'
@@ -63,9 +160,17 @@ class PostListView(ListView):
     context_object_name = 'posts'
     ordering = ['-date_posted']
 
+class ReviewListView(ListView):
+    model = Review
+    context_object_name = 'reviews'
+    ordering = ['-date_posted']
+
 
 class PostDetailView(DetailView):
     model = Post
+
+class ReviewDetailView(DetailView):
+    model = Review
 
 def subs(request):
     return render(request, 'subs.html')

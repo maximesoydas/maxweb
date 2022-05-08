@@ -42,8 +42,6 @@ def registerView(request):
                 'form': form,
             })
             return HttpResponse(template.render(context))
-            form.save()
-            return redirect('login_url')
     else:
         form = UserCreationForm
     return render(request, 'registration/register.html', {'form': form})
@@ -67,8 +65,6 @@ def register(request):
         context = {'form': form}
         return render(request, 'register.html', context)
 
-    return render(request, 'register.html', {})
-
 
 class ProfileListView(ListView):
     model = User
@@ -85,7 +81,7 @@ def follow_get(request):
     }
     return render(request, 'subs.html', context)
 
-
+# check for error
 def delete_userfollow(request, id):
     if request.method == 'POST':
         print(id)
@@ -95,7 +91,7 @@ def delete_userfollow(request, id):
             pi = UserFollows.objects.filter(following=id)
             pi.delete()
         else:
-            pi = UserFollows.objects.get(following=id)
+            pi = UserFollows.objects.filter(following=id)
             pi.delete()
         return redirect('subs')
 
@@ -112,93 +108,3 @@ def search_bar(request):
             print(e)
 
         return redirect('subs')
-
-
-# def follow_unfollow_profile(request):
-
-#     if request.method=="POST":
-#         my_profile = Profile.objects.get(user=request.user)
-#         pk = request.POST.get('profile_pk')
-#         obj = Profile.objects.get(pk=pk)
-
-#         if obj.user in my_profile.following.all():
-#             my_profile.following.remove(obj.user)
-#         else:
-#             my_profile.following.add(obj.user)
-#         return redirect(request.META.get('HTTP_REFERER'))
-#     return redirect('profile-list-view')
-
-
-# def searchbar(self, request):
-#     if request.method == 'GET':
-#         search = request.GET.get('search')
-#         username = Profile.objects.all().exclude(user=self.request.user)
-#         return render(request,'searchbar.html', {'username': username})
-
-
-# class ProfileView(View):
-#     def get(self, request, pk, *args, **kwargs):
-
-#         profile = Profile.objects.get(pk=pk)
-#         user= profile.user
-#         followers = profile.followers.all()
-
-#         if len(followers) == 0:
-#             is_following = False
-
-#         for follower in followers:
-#             if follower == request.user:
-#                 is_following = True
-#                 break
-#             else:
-#                 is_following = False
-
-#         print(user)
-
-#         context = {
-#             'user': user,
-#             'followers':followers,
-#             'is_following': is_following,
-#         }
-#         print(context)
-#         return render(request, 'subs.html', context)
-
-
-# class AddFollower(LoginRequiredMixin, View):
-#     def post(self, request, pk, *args, **kwargs):
-#         profile = Profile.objects.get(pk=pk)
-#         profile.followers.add(request.user)
-#         print(profile.pk)
-#         print(profile.followers.all())
-
-#         return redirect('subs')
-
-# class RemoveFollower(LoginRequiredMixin, View):
-#     def post(self, request, pk, *args, **kwargs):
-#         profile = User.objects.get(pk=pk)
-#         profile.follower.remove(request.user)
-
-#         return redirect('subs')
-
-
-# class ProfileDetailView(DetailView):
-#     model = Profile
-#     template_name = 'profiles/detail.html'
-
-#     def get_object(self, **kwargs):
-#         pk = self.kwargs.get('pk')
-#         view_profile = Profile.objects.get(pk=pk)
-#         return view_profile
-
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         view_profile = self.get_object()
-#         my_profile = Profile.objects.get(user=self.request.user)
-#         if view_profile.user in my_profile.following.all():
-#             follow = True
-#         else:
-#             follow = False
-#         context["follow"] = follow
-
-
-#         return context

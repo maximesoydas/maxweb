@@ -1,0 +1,74 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+    {% if user.is_authenticated %}
+        <ul class="flow-navbar">
+            <li>
+                <a href="{% url 'logout' %}">Logout</a>
+            </li>
+            <li>
+                <a href="{% url 'subs' %}">Subscribers</a>
+            </li>
+            <li>
+                <a href="{% url 'posts' %}">Posts</a>
+            </li>
+            <li>
+                <a href="{% url 'flow' %}">Flow</a>
+            </li>
+            <li class='logo-navbar'>
+                <a href="{% url 'flow' %}">LITReview</a>
+            </li>
+        </ul>
+        <div class='tickets style="margin-top:30px"'>
+            <h2>Create a Review</h2>
+            <form method="post">
+                {% csrf_token %}
+                Ticket
+                
+                
+            {% for field in form %}
+                {{field}}
+             {% comment %} {% if field.name == 'ticket' %}
+                {{ field }}
+                {% endif %}
+            {% if field.name == "headline" %}
+            <p> Title </p>
+           
+            {% if field.value != None %}
+            <input type='text' name='title' value = "{{ field.value }}" placeholder='Your Review Headline'>
+            {% else %}
+            <input type='text' name='title' placeholder='Your Review Headline'>
+            {% endif %}
+            {% endif %}
+
+
+            {% if field.name == "content" %}
+
+            <div class="ticket-description">
+                <p>
+                    Description
+                </p>
+                {% if field.value != None %}
+                <textarea name='content'> {{field.value}} </textarea>
+                {% else %}
+                <textarea name='content' placeholder='Content'></textarea>
+                {% endif %}
+            </div>
+            {% endif %} {% endcomment %}
+            
+            {% comment %} {% if field.name == "rating" %}
+
+             {{field}}
+    
+
+            {% endif %} {% endcomment %}
+        
+            <br>
+            <br>
+
+             {% endfor %}
+             <input type="submit" value="Submit" />
+            </form>
+        </div>
+{% endif %}
+{% endblock content %}

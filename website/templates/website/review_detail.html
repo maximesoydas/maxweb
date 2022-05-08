@@ -1,0 +1,89 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+    {% if user.is_authenticated %}
+        <ul class="flow-navbar">
+            <li>
+                <a href="{% url 'logout' %}">Logout</a>
+            </li>
+            <li>
+                <a href="{% url 'subs' %}">Subscribers</a>
+            </li>
+            <li>
+                <a href="{% url 'posts' %}">Posts</a>
+            </li>
+            <li>
+                <a href="{% url 'flow' %}">Flow</a>
+            </li>
+            <li class='logo-navbar'>
+                <a href="{% url 'flow' %}">LITReview</a>
+            </li>
+        </ul>
+        <div class="flow">
+            <!-- Create a ticket - Ask a review buttons -->
+            {% if object.author == user %}
+                <div class="flow-buttons">
+                    <button class="flow-ask-review">
+                        <a href="{% url 'review-update' object.id %}">Update</a>
+                    </button>
+                    <button class="flow-create-ticket" >
+                        <a href="{% url 'review-delete' object.id %}">Delete</a>
+                    </button>
+                </div>
+            {% endif %}
+            {{ object }}
+            <!-- The current flow-ticket's data -->
+          
+                <div class='flow-ticket'>
+                    <div class='flow-ticket'>
+                        {% if object.ticket.author == user %}
+                        <p class="flow-owner">
+                            Your Ticket !
+                        </p>
+                    {% else %}
+                        <p class="flow-owner">
+                            {{ object.ticket.author }}'s post
+                        </p>
+                    {% endif %}
+                    <p class="flow-timedate">
+                        {{ object.ticket.date_posted|date:"H:i, d F Y" }}
+                    </p>
+                    <h3 class="flow-ratings-comment">
+                        <a href="{% url 'ticket-detail' object.ticket.id %}">{{ object.ticket.title }}</a>
+                    </h3>
+                    <p class="flow-description">
+                        {{ post.content }}
+                    </p>
+                    {% if object.ticket.header_image %}<img src="{{ object.ticket.header_image.url }}">{% endif %}
+                    {% if object.reviewed == 'false' %}
+                        <p style="text-align: end;">
+                            <a href="{% url 'review' %}">Create a Review</a>
+                        </p>
+                    </div>
+                    {% endif %}
+                </div>
+                {% if object.author == user %}
+                    <p class="flow-owner">
+                        Your Review !
+                    </p>
+                {% else %}
+                    <p class="flow-owner">
+                        {{ object.author }}
+                    </p>
+                {% endif %}
+                <p class="flow-timedate">
+                    {{ object.date_posted|date:"H:i, d F Y" }}
+                </p>
+                <h3 class="flow-ratings-comment">{{ object.title }}</h3>
+                <p class="flow-description">
+                    {{ object.content }}
+                </p>
+                  
+                {% if post.header_image %}
+                        <img src="{{ post.header_image.url }}">
+                {% endif %}
+      
+            </div>
+
+        {% endif %}
+    {% endblock content %}
