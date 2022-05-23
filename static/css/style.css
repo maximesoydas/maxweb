@@ -226,6 +226,15 @@ ul.flow-navbar{
     background-color: antiquewhite;
 }
 
+
+.flow-ticket-review{
+    border: 3px solid #333;
+    padding: 0.5vw;
+    margin: 1vw;
+    background-color: white;
+    
+}
+
 .flow-buttons{
     margin: 0.7vw;
     

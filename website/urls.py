@@ -5,7 +5,7 @@ from . import views
 from .views import PostCreateView, PostListView, PostDetailView, PostUpdateView, PostDeleteView, ReviewDetailView, ReviewDeleteView
 from django.contrib.auth.views import LoginView, LogoutView
 from accounts.views import follow_get
-from .views import CreateReviewView, UpdateReviewView,ReviewUpdateView,ReviewCreateView
+from .views import CreateReviewView, UpdateReviewView,ReviewUpdateView,ReviewCreateView,review_of_ticket,update_review
 
 urlpatterns = [
     path('', LoginView.as_view(redirect_authenticated_user=True), name="home"),
@@ -19,11 +19,12 @@ urlpatterns = [
     path('ticket/new/', PostCreateView.as_view(), name="ticket"),
 #  reviews
     path('review/<int:pk>/', ReviewDetailView.as_view(), name="review-detail"),
-    path('review/<int:pk>/update/', ReviewUpdateView.as_view(), name="review-update"),
+    path('review/<int:pk>/update/', views.update_review, name="review-update"),
+    path('review/<int:pk>/create_review', views.review_of_ticket, name="review-of-ticket"),
     path('review/<int:pk>/delete/', ReviewDeleteView.as_view(), name="review-delete"),
     # path('review/', views.review, name="review"),
-    path('review/new/', ReviewCreateView.as_view(), name="review"),
-
+    # path('review/new/', ReviewCreateView.as_view(), name="review"),
+    path('review_create/', views.review_create_view, name="review_create"),
     path('review_of_ticket/', views.review_of_ticket, name="review_of_ticket"),
     path('modify_ticket/', views.modify_ticket, name="modify_ticket"),
     path('modify_review/', views.modify_review, name="modify_review"),

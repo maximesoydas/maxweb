@@ -26,11 +26,13 @@
                     <a href="{% url 'ticket' %}">Create a ticket</a>
                 </button>
                 <button class="flow-create-ticket">
-                    <a href="{% url 'review' %}">Create a Review</a>
+                    <a href="{% url 'review_create' %}">Create a Review</a>
                 </button>
             </div>
             {% for post in post_review %}
                 {% if post.type == 'post' %}
+                    {% if post.reviewed == 'true'%}
+                    {% else %}
                     <div class='flow-ticket'>
                         {% if post.author == user %}
                             <p class="flow-owner">
@@ -51,11 +53,12 @@
                             {{ post.content }}
                         </p>
                         {% if post.header_image %}<img src="{{ post.header_image.url }}">{% endif %}
-                        {% if post.reviewed == 'false' %}
+                      
                             <p style="text-align: end;">
-                                <a href="{% url 'review' %}">Create a Review</a>
+                                <a href="{% url 'review-of-ticket' post.id %}">Create a Review</a>
                             </p>
                         </div>
+           
                     {% endif %}
                 {% endif %}
                 {% if post.type == 'review' %}

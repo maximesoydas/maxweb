@@ -12,6 +12,7 @@ from extra_views import CreateWithInlinesView, UpdateWithInlinesView, InlineForm
 from itertools import zip_longest
 import operator
 from operator import itemgetter
+from .forms import PostForm, ReviewForm
 
 def home(request):
     return render(request, 'home.html')
@@ -110,16 +111,18 @@ class ReviewDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         else:
             return False
 
+
 class ReviewUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Review
     fields = [ 'ticket', 'headline','rating', 'content',]
     def form_valid(self, form):
         form.instance.author = self.request.user
         self.object = form.save()
+        print('R')
         return super().form_valid(form)
     def test_func(self):
-        post = self.get_object()
-        if self.request.user == post.author:
+        review = self.get_object()
+        if self.request.user == review.author:
             return True
         else:
             return False
@@ -193,3 +196,69 @@ def modify_ticket(request):
 def modify_review(request):
     return render(request, 'reviews/modify_review.html')
 
+def review_create_view(request):
+    form2 = PostForm(request.POST,request.FILES or None)
+    form = ReviewForm(request.POST or None)
+
+    context = {
+
+        "form2": form2,
+        "form": form,
+    }
+    
+    if all([form2.is_valid(), form.is_valid()]):
+        current_user = request.user
+        parent = form2.save(commit=False)
+        parent.author_id = current_user.id
+        parent.reviewed = 'true'
+        parent.save()
+        child = form.save(commit=False)
+        child.author_id = current_user.id
+        child.ticket = parent
+        child.save()
+        print("form", form.cleaned_data)
+        print("form2", form2.cleaned_data)
+        context['message'] = 'data saved'
+
+        return redirect('flow')
+
+    return render(request, "reviews/review_create.html", context,)
+
+def update_review(request, pk): 
+    instance = Review.objects.get(id=pk)
+    form = ReviewForm(request.POST or None, instance=instance)
+    review_form = form.save(commit=False)
+    review_form_ticket = review_form.ticket
+    context = {
+        "form": form,
+        "ticket": review_form_ticket,
+    }
+    if form.is_valid():
+          form.save()
+          return redirect('flow')
+    
+    return render(request, "website/review_form.html", context,)
+
+
+def review_of_ticket(request, pk): 
+    
+    instance = Post.objects.get(id=pk)
+    form = ReviewForm(request.POST or None)
+    review_form_ticket = instance
+    context = {
+        "form": form,
+        "ticket": review_form_ticket,
+    }
+    if form.is_valid():
+        current_user = request.user
+        child = form.save(commit=False)
+        child.author_id = current_user.id
+        child.ticket = instance
+        instance.reviewed = 'true'
+        child.save()
+        instance.save()
+        print(instance.reviewed)
+        form.save()
+        return redirect('flow')
+
+    return render(request, "website/review_form.html", context,)
