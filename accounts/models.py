@@ -1,14 +1,17 @@
-
-from django.conf import settings
-from statistics import mode
 from django.db import models
-from website.models import Post
 from django.contrib.auth.models import User
+
 
 class UserFollows(models.Model):
     # Your UserFollows model definition goes here
-    following = models.ForeignKey(User, on_delete=models.CASCADE, related_name="following")
-    follower = models.ForeignKey(User, on_delete=models.CASCADE, related_name="follower")
+    following = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="following")
+    follower = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="follower")
     follow_time = models.DateTimeField(auto_now=True)
 
     def __str__(self):

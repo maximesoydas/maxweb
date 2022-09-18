@@ -16,13 +16,31 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='UserFollows',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('follow_time', models.DateTimeField(auto_now=True)),
-                ('follower', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='follower', to=settings.AUTH_USER_MODEL)),
-                ('following', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='following', to=settings.AUTH_USER_MODEL)),
+                ('id',
+                 models.BigAutoField(
+                     auto_created=True,
+                     primary_key=True,
+                     serialize=False,
+                     verbose_name='ID')),
+                ('follow_time',
+                 models.DateTimeField(
+                     auto_now=True)),
+                ('follower',
+                 models.ForeignKey(
+                     on_delete=django.db.models.deletion.CASCADE,
+                     related_name='follower',
+                     to=settings.AUTH_USER_MODEL)),
+                ('following',
+                 models.ForeignKey(
+                     on_delete=django.db.models.deletion.CASCADE,
+                     related_name='following',
+                     to=settings.AUTH_USER_MODEL)),
             ],
             options={
-                'unique_together': {('following', 'follower')},
+                'unique_together': {
+                    (
+                        'following',
+                        'follower')},
             },
         ),
         migrations.DeleteModel(

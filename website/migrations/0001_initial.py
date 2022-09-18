@@ -16,14 +16,29 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Ticket',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('body', models.TextField()),
-                ('updated', models.DateTimeField(auto_now=True)),
-                ('created', models.DateTimeField(auto_now_add=True)),
-                ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='accounts.profile')),
+                ('id',
+                 models.BigAutoField(
+                     auto_created=True,
+                     primary_key=True,
+                     serialize=False,
+                     verbose_name='ID')),
+                ('body',
+                 models.TextField()),
+                ('updated',
+                 models.DateTimeField(
+                     auto_now=True)),
+                ('created',
+                 models.DateTimeField(
+                     auto_now_add=True)),
+                ('author',
+                 models.ForeignKey(
+                     on_delete=django.db.models.deletion.CASCADE,
+                     to='accounts.profile')),
             ],
             options={
-                'ordering': ('-created',),
+                'ordering': (
+                    '-created',
+                ),
             },
         ),
     ]

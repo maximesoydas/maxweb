@@ -38,7 +38,9 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='review',
             name='header_image',
-            field=models.ImageField(blank=True, null=True, upload_to='images/'),
+            field=models.ImageField(
+                blank=True, null=True,
+                upload_to='images/'),
         ),
         migrations.AlterField(
             model_name='post',

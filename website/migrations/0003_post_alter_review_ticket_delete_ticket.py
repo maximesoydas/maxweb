@@ -16,18 +16,24 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Post',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(
+                    auto_created=True, primary_key=True,
+                    serialize=False, verbose_name='ID')),
                 ('title', models.CharField(max_length=100)),
                 ('content', models.TextField()),
                 ('updated', models.DateTimeField(auto_now=True)),
                 ('date_posted', models.DateTimeField(auto_now_add=True)),
-                ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('author', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE,
+                    to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.AlterField(
             model_name='review',
             name='ticket',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='website.post'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                to='website.post'),
         ),
         migrations.DeleteModel(
             name='Ticket',
