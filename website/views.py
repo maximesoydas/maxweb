@@ -39,8 +39,6 @@ def flow(request):
             if post.author == contact.following:
                 posts_reviews.append(post)
     for review in reviews:
-        if review.author == request.user:
-            posts_reviews.append(review)
         for contact in follower:
             if review.author == contact.following:
                 posts_reviews.append(review)
