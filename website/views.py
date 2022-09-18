@@ -34,6 +34,7 @@ def flow(request):
     for post in posts:
         if post.author == request.user:
             posts_reviews.append(post)
+            print(post)
         for contact in follower:
             if post.author == contact.following:
                 posts_reviews.append(post)
@@ -43,6 +44,9 @@ def flow(request):
         for contact in follower:
             if review.author == contact.following:
                 posts_reviews.append(review)
+        if review.ticket.author == request.user:
+            posts_reviews.append(review)
+            
 
     posts_reviews.sort(key=lambda x: x.date_posted, reverse=True)
     # print(post_reviews)
@@ -262,3 +266,16 @@ def review_of_ticket(request, pk):
         return redirect('flow')
 
     return render(request, "website/review_form.html", context,)
+
+
+def view_tickets_reviews(request):
+    object1= Post.objects.filter(author=request.user).order_by('-date_posted')
+    object2= Review.objects.filter(author=request.user).order_by('-date_posted')
+
+    context= {
+        'object1':object1,
+        'object2':object2,
+    }
+
+
+    return render(request, "website/review_post_detail.html", context)

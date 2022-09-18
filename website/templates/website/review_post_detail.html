@@ -21,18 +21,8 @@
         </ul>
         <div class="flow">
             <!-- Create a ticket - Ask a review buttons -->
-            <div class="flow-buttons">
-                <button class="flow-ask-review">
-                    <a href="{% url 'ticket' %}">Create a ticket</a>
-                </button>
-                <button class="flow-create-ticket">
-                    <a href="{% url 'review_create' %}">Create a Review</a>
-                </button>
-            </div>
-            {% for post in post_review %}
-                {% if post.type == 'post' %}
-                    {% if post.reviewed == 'true'%}
-                    {% else %}
+            <h1>YOUR TICKETS </h1>
+            {% for post in object1 %}
                     <div class='flow-ticket'>
                         {% if post.author == user %}
                             <p class="flow-owner">
@@ -54,58 +44,56 @@
                         </p>
                         {% if post.header_image %}<img src="{{ post.header_image.url }}">{% endif %}
                       
-                            <p style="text-align: end;">
-                                <a href="{% url 'review-of-ticket' post.id %}">Create a Review</a>
-                            </p>
                         </div>
            
-                    {% endif %}
-                {% endif %}
-                {% if post.type == 'review' %}
+                        {% endfor %}
+             
+                       <h1> YOUR REVIEWS</h1>
+                        {% for review in object2 %}
                 <!-- REVIEW TICKET -->
                 <!-- The current flow-ticket's data -->
                 <div class='flow-ticket'>
                     <div class='flow-ticket'>
-                    {% if post.ticket.author == user %}
+                        {% if review.ticket.author == user %}
                         <p class="flow-owner">
                             Your Ticket !
                         </p>
                     {% else %}
                         <p class="flow-owner">
-                            {{ post.ticket.author }}'s post
+                            {{ review.ticket.author }}'s review
                         </p>
                     {% endif %}
                     <p class="flow-timedate">
-                        {{ post.ticket.date_posted|date:"H:i, d F Y" }}
+                        {{ review.ticket.date_posted|date:"H:i, d F Y" }}
                     </p>
                     <h3 class="flow-ratings-comment">
-                        <a href="{% url 'ticket-detail' post.ticket.id %}">{{ post.ticket.title }}</a>
+                        <a href="{% url 'ticket-detail' review.ticket.id %}">{{ review.ticket.title }}</a>
                     </h3>
                     <p class="flow-description">
-                        {{ post.content }}
+                        {{ review.content }}
                     </p>
-                    {% if post.ticket.header_image %}<img src="{{ post.ticket.header_image.url }}">{% endif %}
+                    {% if review.ticket.header_image %}<img src="{{ review.ticket.header_image.url }}">{% endif %}
                     </div>
-                        {% if post.author == user %}
+                        {% if review.author == user %}
                     <p class="flow-owner">
                         Your Review !
                             </p>
                         {% else %}
                             <p class="flow-owner">
-                                {{ post.author }}'s review
+                                {{ review.author }}'s review
                             </p>
                         {% endif %}
                         <p class="flow-timedate">
-                            {{ post.time_created|date:"H:i, d F Y" }}
+                            {{ review.time_created|date:"H:i, d F Y" }}
                         </p>
                         <h3 class="flow-ratings-comment">
-                            <a href="{% url 'review-detail' post.id %}">{{ post.headline }}</a>
+                            <a href="{% url 'review-detail' review.id %}">{{ review.headline }}</a>
                         </h3>
                         <p class="flow-description">
-                            {{ post.content }}
+                            {{ review.content }}
                         </p>
                     </div>
-                {% endif %}
+            
         {% endfor %}
     {% endif %}
 {% endblock content %}
