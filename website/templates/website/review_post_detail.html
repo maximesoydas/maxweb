@@ -1,6 +1,15 @@
 {% extends 'index.html' %}
 {% load static %}
 {% block content %}
+    <head>
+    <!-- Font Awesome Icon Library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+    .checked {
+      color: orange;
+    }
+    </style>
+    </head>
     {% if user.is_authenticated %}
         <ul class="flow-navbar">
             <li>
@@ -90,7 +99,13 @@
                             <a href="{% url 'review-detail' review.id %}">{{ review.headline }}</a>
                         </h3>
                         <p class="flow-description">
-                            {{ review.content }}
+                            <strong>Rating</strong>
+                            {% for i in review.rating|get_range %}
+                                <span class="fa fa-star checked"></span>
+                            {% endfor %}
+                            <br>
+                            <br>
+                            {{ review.body }}
                         </p>
                     </div>
             

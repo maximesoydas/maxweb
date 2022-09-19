@@ -1,6 +1,15 @@
 {% extends 'index.html' %}
 {% load static %}
 {% block content %}
+    <head>
+    <!-- Font Awesome Icon Library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+    .checked {
+      color: orange;
+    }
+    </style>
+    </head>
     {% if user.is_authenticated %}
         <ul class="flow-navbar">
             <li>
@@ -82,7 +91,7 @@
                         <a href="{% url 'ticket-detail' post.ticket.id %}">{{ post.ticket.title }}</a>
                     </h3>
                     <p class="flow-description">
-                        {{ post.content }}
+                        {{ post.ticket.content }}
                     </p>
                     {% if post.ticket.header_image %}<img src="{{ post.ticket.header_image.url }}">{% endif %}
                     </div>
@@ -101,8 +110,12 @@
                         <h3 class="flow-ratings-comment">
                             <a href="{% url 'review-detail' post.id %}">{{ post.headline }}</a>
                         </h3>
+                        <strong>Rating</strong>
+                        {% for i in post.rating|get_range %}
+                            <span class="fa fa-star checked"></span>
+                        {% endfor %}
                         <p class="flow-description">
-                            {{ post.content }}
+                            {{ post.body }}
                         </p>
                     </div>
                 {% endif %}

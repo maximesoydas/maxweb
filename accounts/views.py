@@ -67,15 +67,15 @@ def delete_userfollow(request, id):
         return redirect('subs')
 
 
-# @login_required
-# def search_bar(request):
-#     if request.method == 'GET':
-#         search_query = request.GET.get('search_box', None)
-#         try:
-#             user_to_follow = User.objects.get(username=search_query)
-#             userfollow = UserFollows.objects.create(
-#                 following=user_to_follow, follower=request.user)
-#         except Exception as e:
-#             print(e)
+@login_required
+def search_bar(request):
+    if request.method == 'GET':
+        search_query = request.GET.get('search_box', None)
+        try:
+            user_to_follow = User.objects.get(username=search_query)
+            UserFollows.objects.create(
+                following=user_to_follow, follower=request.user)
+        except Exception as e:
+            print(e)
 
-#         return redirect('subs')
+        return redirect('subs')

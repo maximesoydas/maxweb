@@ -38,9 +38,12 @@
                 <div class="review-description">
                     <p>Comments</p>
                     <textarea type="textarea"  placeholder='Content'></textarea>
+                    <h4 style="color: red; text-align: left; margin-left: 13em" > {{ form.errors }} </h4>
                 </div>
+
                 <button class="create-review-btn">Submit</button>
         </div>
+
         </form>
     {% endif %}
 {% endblock content%}

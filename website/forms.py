@@ -5,7 +5,7 @@ from .models import Review, Post
 class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
-        fields = ['headline', 'rating', 'content']
+        fields = ['headline', 'rating', 'body']
 
 
 class PostForm(forms.ModelForm):

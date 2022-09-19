@@ -19,79 +19,62 @@
                 <a href="{% url 'flow' %}">LITReview</a>
             </li>
         </ul>
-        <div class='tickets style="margin-top:30px"'>
+        <div class='tickets style="margin-top:50px"'>
             <h2>Create a Review</h2>
+
+                <h2 style='text-align:center'> <u> TICKET </u> </h2>
+                <div class='tickets'>
+                <br>
+                <p class="flow-owner">
+               <h1> <b> {{ ticket.title }}  </b> </h1>
+                </p>
+                <p class="flow-owner">
+                {{ ticket.content }}
+                </p>                
+            {% if ticket.header_image %}
+             <img src='{{ticket.header_image.url}}'>
+            {% endif %}
+        </div>
+            <div style="text-align:center;" class='flow-ticket'>
             <form enctype="multipart/form-data" method="POST">
                 {% csrf_token %}
-            <div class='flow-ticket'>
-
-                <h2 style='text-align:center'> TICKET </h2>
-                <div class='tickets'>
-                
-                <br>
-                <p class="flow-owner">
-               <h1> <b> {{ticket.title}}  </b> </h1>
-                </p>
-                <br>
-                <br>
-                <p class="flow-owner">
-                Content: <br>
-                <br>{{ticket.content}}
-                </p>
-                <br>
-                <br>
-                
-             <img src='{{ticket.header_image.url}}'>
-            
-            </div>
-        </div>
-            <div class='flow-ticket'>
-                    
                 {% for field in form %}
                 
-                {% if object.ticket.id is not None %}
-                {% if field.name == 'ticket' %}
-                    {% if object.ticket.author == user %}
-                        <p class="flow-owner">
-                            Your Ticket !
-                        </p>
+                    {% if field.name == "headline" %}
+                    <p> Headline </p>
+                    {% if field.value == None %}
+                    <input type='text' name='headline' placeholder='Your Headline'>
                     {% else %}
-                        <p class="flow-owner">
-                            {{ object.ticket.author }}
-                        </p>
+                    <input type='text' name='headline' value = "{{ field.value }}">
                     {% endif %}
-                    <p class="flow-timedate">
-                        {{ object.ticket.date_posted|date:"H:i, d F Y" }}
-                    </p>
-                    <h3 class="flow-ratings-comment">{{ object.ticket.title }}</h3>
-                    <p class="flow-description">
-                        {{ object.ticket.content }}
-                    </p>
-                    
-                    {% if object.ticket.header_image %}
-                            <img src="{{ object.ticket.header_image.url }}">
                     {% endif %}
-                </div>
+
+
                 
-                {% endif %}
-                {% endif %}
+                    {% if field.name == "body" %}
+                    <p> Body </p>
+                    {% if field.value == None %}
+                    <textarea type='textarea' name='body' placeholder='Your Body'></textarea>
+                    {% else %}
+                    <input type='text' name='body' value = "{{ field.value }}" placeholder='Your Body'>
+                    {% endif %}
+                    {% endif %}
 
-                {% if field.name == 'headline' %}
+                    {% if field.name == 'rating' %}
+                    <p style="text-align:center; ">Rating (max. 5)<br></p>
+                    {% if field.value == None %}
+                        {{field}}
+                    {% else %}
 
-                <h2 style='text-align:center'> REVIEW </h2>
-        
-                <p style="text-align:center; ">Headline<br><br>{{field}}</p>
+                        <input maxlength='5' type='number' name='rating' value = "{{ field.value }}" placeholder='Your Rating'>
+                    {% endif %}
 
-                {% elif field.name == 'rating' %}
-                <p style="text-align:center; ">Rating (max. 5)<br><br>{{field}}</p>
-
-                {% elif field.name == 'content' %}
-                <p style="text-align:center; ">Content<br><br>{{field}}</p>
                 {% endif %}
                 {% endfor %}
            
+                <h4 style="color: red; text-align: left; margin-left: 19em" > {{ form.errors }} </h4>
             </div>
-            <input type="submit" value="Submit" />
+            <button style="text-align: left;" type='submit'>Submit</button>
         </form>
     </div>
     {% endif %}

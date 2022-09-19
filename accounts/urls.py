@@ -17,6 +17,7 @@ urlpatterns = [
         name="logout"),
     path('admin/', admin.site.urls, name="admin_url"),
     path('register/', users_views.register, name='register'),
+    path('', users_views.search_bar, name='search'),
     path('delete/<int:id>/', views.delete_userfollow, name='deletedata')
 
 ]

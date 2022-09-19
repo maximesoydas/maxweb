@@ -4,15 +4,17 @@ from django.views.generic import ListView, \
 from .models import Post, Review
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from accounts.models import UserFollows
-from extra_views import CreateWithInlinesView,\
-    UpdateWithInlinesView, InlineFormSetFactory
+
 from .forms import PostForm, ReviewForm
+from django.template.defaulttags import register
+from django.contrib import messages
 
 
-def home(request):
-    return render(request, 'home.html')
-
-# @login_required
+@register.filter
+# helps us loop over the review's rating and
+# add stars for the range of the int variable; rating
+def get_range(value):
+    return range(value)
 
 
 def flow(request):
@@ -43,9 +45,8 @@ def flow(request):
         if review.ticket.author == request.user:
             posts_reviews.append(review)
 
+    posts_reviews = list(set(posts_reviews))
     posts_reviews.sort(key=lambda x: x.date_posted, reverse=True)
-    # print(post_reviews)
-
     for p in posts_reviews:
         print(p.type)
 
@@ -58,49 +59,16 @@ def flow(request):
     return render(request, 'flow.html', context)
 
 
-class ReviewMetaInline(InlineFormSetFactory):
-    model = Review
-    fields = ['ticket', 'rating', 'headline', 'content', ]
-    factory_kwargs = {'extra': 1, 'max_num': None,
-                      'can_order': False, 'can_delete': False}
-    formset_kwargs = {'auto_id': 'my_id_%s'}
-
-
-class CreateReviewView(CreateWithInlinesView):
-    model = Post
-    inlines = [ReviewMetaInline]
-    fields = ['title', 'content', 'header_image']
-    template_name = 'website/review_form.html'
-
-    def form_valid(self, form):
-        form.instance.author = self.request.user
-        return super().form_valid(form)
-
-    def get_success_url(self):
-        return self.object.get_absolute_url()
-
-
-class UpdateReviewView(UpdateWithInlinesView):
-    model = Post
-    inlines = [ReviewMetaInline]
-    fields = ['title', 'content', 'header_image']
-    template_name = 'website/review_form.html'
-
-    def form_valid(self, form):
-        form.instance.author = self.request.user
-        return super().form_valid(form)
-
-    def get_success_url(self):
-        return self.object.get_absolute_url()
-
-
 class ReviewCreateView(LoginRequiredMixin, CreateView):
     model = Review
     fields = ['ticket', 'headline', 'rating', 'content', ]
 
     def form_valid(self, form):
         form.instance.author = self.request.user
-        return super().form_valid(form)
+        try:
+            return super().form_valid(form)
+        except ValueError:
+            messages.add_message(self.request, messages.INFO, 'Hello world.')
 
 
 class ReviewDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
@@ -110,24 +78,6 @@ class ReviewDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         post = self.get_object()
         if self.request.user == post.author:
-            return True
-        else:
-            return False
-
-
-class ReviewUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
-    model = Review
-    fields = ['ticket', 'headline', 'rating', 'content', ]
-
-    def form_valid(self, form):
-        form.instance.author = self.request.user
-        self.object = form.save()
-        print('R')
-        return super().form_valid(form)
-
-    def test_func(self):
-        review = self.get_object()
-        if self.request.user == review.author:
             return True
         else:
             return False
@@ -191,6 +141,23 @@ class ReviewDetailView(DetailView):
     model = Review
 
 
+class ReviewUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Review
+    fields = ['headline', 'body', 'rating']
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        self.object = form.save()
+        return super().form_valid(form)
+
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == post.author:
+            return True
+        else:
+            return False
+
+
 def review_create_view(request):
     form2 = PostForm(request.POST, request.FILES or None)
     form = ReviewForm(request.POST or None)
@@ -200,7 +167,6 @@ def review_create_view(request):
         "form2": form2,
         "form": form,
     }
-
     if all([form2.is_valid(), form.is_valid()]):
         current_user = request.user
         parent = form2.save(commit=False)
@@ -216,24 +182,9 @@ def review_create_view(request):
         context['message'] = 'data saved'
 
         return redirect('flow')
-
-    return render(request, "reviews/review_create.html", context,)
-
-
-def update_review(request, pk):
-    instance = Review.objects.get(id=pk)
-    form = ReviewForm(request.POST or None, instance=instance)
-    review_form = form.save(commit=False)
-    review_form_ticket = review_form.ticket
-    context = {
-        "form": form,
-        "ticket": review_form_ticket,
-    }
-    if form.is_valid():
-        form.save()
-        return redirect('flow')
-
-    return render(request, "website/review_form.html", context,)
+        # return render(request, 'reviews/review_create.html', context)
+    else:
+        return render(request, 'reviews/review_create.html', context)
 
 
 def review_of_ticket(request, pk):
@@ -253,11 +204,11 @@ def review_of_ticket(request, pk):
         instance.reviewed = 'true'
         child.save()
         instance.save()
-        print(instance.reviewed)
         form.save()
         return redirect('flow')
+    else:
 
-    return render(request, "website/review_form.html", context,)
+        return render(request, "website/review_form.html", context,)
 
 
 def view_tickets_reviews(request):

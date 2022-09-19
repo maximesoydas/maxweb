@@ -1,7 +1,8 @@
 from django.urls import path
 from . import views
 from .views import PostCreateView, PostDetailView,\
-    PostUpdateView, PostDeleteView, ReviewDetailView, ReviewDeleteView
+    PostUpdateView, PostDeleteView, ReviewDetailView,\
+    ReviewDeleteView, ReviewUpdateView
 from django.contrib.auth.views import LoginView
 from accounts.views import follow_get
 
@@ -16,14 +17,17 @@ urlpatterns = [
         PostUpdateView.as_view(),
         name="post-update"),
     path(
+        'review/<int:pk>/update/',
+        ReviewUpdateView.as_view(),
+        name="review-update"),
+    path(
         'post/<int:pk>/delete/',
         PostDeleteView.as_view(),
         name="post-delete"),
-    # path('posts/', views.posts, name="posts"),
-    path('ticket/new/', PostCreateView.as_view(), name="ticket"),
-    #  reviews
-    path('review/<int:pk>/', ReviewDetailView.as_view(), name="review-detail"),
-    path('review/<int:pk>/update/', views.update_review, name="review-update"),
+    path('ticket/new/', PostCreateView.as_view(),
+         name="ticket"),
+    path('review/<int:pk>/', ReviewDetailView.as_view(),
+         name="review-detail"),
     path(
         'review/<int:pk>/create_review',
         views.review_of_ticket,
@@ -36,4 +40,7 @@ urlpatterns = [
         'website/review_post_detail',
         views.view_tickets_reviews,
         name='posts'),
+    path('review_create/', views.review_create_view,
+         name="review_create"),
+
 ]

@@ -35,7 +35,7 @@ class Review(models.Model):
         # validates that rating must be between 0 and 5
         validators=[MinValueValidator(0), MaxValueValidator(5)])
     headline = models.CharField(max_length=128)
-    content = models.TextField()
+    body = models.TextField()
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     date_posted = models.DateTimeField(auto_now_add=True)
     type = models.CharField(max_length=7, default='review')

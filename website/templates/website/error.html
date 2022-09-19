@@ -1,0 +1,10 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+    {% if user.is_authenticated %}
+          {{ forms.as_p }}
+          {{ form.errors }}
+          <a href="http://127.0.0.1:8000/review_create/"> return </a>
+    {% endif %}
+    {% endblock content %}
+    

@@ -35,8 +35,7 @@
             {%endif%}
             {% if field2.name == 'header_image' %}
             {% if field2.value == None %}
-            NONE
-            
+            Picture            
             <input type="file" name="header_image" accept=".doc, .docx, .pdf, .txt, .png, .jpg, .jpeg">
            
             {% endif %}
@@ -65,17 +64,19 @@
             Rating (1-5) <br> <br>{{field}}
             <br>
             <br>
-            {% elif field.name == 'content' %}
-            Description {{field}}
+            {% elif field.name == 'body' %}
+            Body {{field}}
             <br>
             <br>
             {% endif %}
             {% endfor %} 
+            <h4 style="color: red; text-align: left; margin-left: 13em" > {{ form.errors }} </h4>
 
          
             <button class="create-ticket-btn" type='submit'>Submit</button>
 
     </form>
+
 </div>
 {% endif %}
 {% endblock content %}
